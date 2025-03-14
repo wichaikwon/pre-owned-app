@@ -4,7 +4,7 @@ import { refreshTokenAction } from '@/app/admin/login/action'
 
 const api = axios.create({
   baseURL: pathAPI,
-  withCredentials: true, // Include cookies in requests
+  withCredentials: true, 
 })
 
 api.interceptors.response.use(

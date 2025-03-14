@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useLogin } from '../../../contexts/useLogin'
 import { useRouter } from 'next/navigation'
+import { refreshTokenAction } from './action'
 
 type LoginFormInputs = {
   username: string
@@ -39,6 +40,8 @@ const Admin: React.FC = () => {
           <button className="cursor-pointer rounded-md bg-red-500 p-2 text-white" onClick={logoutUser}>
             Logout
           </button>
+          
+      <button onClick={refreshTokenAction}>refresh</button>
           <p>Username</p>
           <input
             className="rounded-md border border-slate-500 p-2"

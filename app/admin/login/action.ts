@@ -15,7 +15,12 @@ export const loginAction = async (username: string, password: string) => {
     if (!token) {
       throw new Error('Token not found in API response')
     }
-    document.cookie = `token=${token}; path=/; max-age=3600;`
+    document.cookie = `token=${token}; path=/; max-age=3600;` 
+    Swal.fire({
+      icon: 'success',
+      title: 'Login Successful',
+      text: 'Welcome back!',
+    })
     return token
   } catch (error: any) {
     console.error('Login failed:', error) 
