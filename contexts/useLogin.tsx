@@ -3,6 +3,7 @@
 import { loginAction, logoutAction } from '@/app/admin/login/action'
 import { useRouter } from 'next/navigation'
 import { createContext, ReactNode, useContext, useState, useEffect } from 'react'
+import { set } from 'react-hook-form'
 
 interface LoginContextProps {
   token: string
@@ -22,7 +23,6 @@ export const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [token, setToken] = useState<string>('')
   const [username, setUsername] = useState<string>('')
   const router = useRouter()
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = document.cookie
@@ -30,17 +30,24 @@ export const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         .find((row) => row.startsWith('token='))
         ?.split('=')[1] ?? ''
       setToken(token)
+      const storedUsername = localStorage.getItem('username')
+      storedUsername && setUsername(storedUsername)
     }
   }, [])
 
   const loginUser = async (username: string, password: string) => {
     try {
-      const token = await loginAction(username, password)
-      setToken(token || '')
+      await loginAction(username, password)
+      const token = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('token='))
+        ?.split('=')[1] ?? ''
+      setToken(token)
       setUsername(username)
+      localStorage.setItem('username', username)
       router.push('/admin')
     } catch (error) {
-      console.error('Login failed in useLogin:', error) 
+      console.log(error)
     }
   }
 
@@ -49,7 +56,7 @@ export const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       await logoutAction()
       document.cookie = `token=; path=/; max-age=0;` 
       setToken('')
-      setUsername('')
+      localStorage.removeItem('username')
       router.push('/admin/login')
     } catch (error) {
       console.log(error)
@@ -57,7 +64,7 @@ export const LoginProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
 
   return (
-    <LoginContext.Provider value={{ token, username, loginUser, logoutUser }}>
+    <LoginContext.Provider value={{ token,username, loginUser, logoutUser }}>
       {children}
     </LoginContext.Provider>
   )

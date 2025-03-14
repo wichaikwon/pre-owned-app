@@ -4,7 +4,7 @@ import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import NavbarAdmin from './admin/Navbar'
-import Sidebar from './admin/Sidebar'
+import Sidebar from './admin/sidebar/Sidebar'
 import FooterAdmin from './admin/Footer'
 
 const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -1,18 +1,24 @@
 'use client'
 import { useLogin } from '@/contexts/useLogin'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Dashboard: React.FC = () => {
   const { token } = useLogin()
   const router = useRouter()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (!token) {
-      console.log('No token found, redirecting to login') // Debugging log
       router.push('/admin/login')
+    } else {
+      setLoading(false)
     }
   }, [token, router])
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
 
   return (
     <div>

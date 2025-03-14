@@ -13,12 +13,16 @@ const SidebarContext = createContext<SidebarContextProps>({
 })
 
 export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const defaultState = typeof window !== 'undefined' ? (localStorage.getItem('__sidebar') ?? 'false') : 'false'
-  const [isOpen, setIsOpen] = useState(defaultState === 'true')
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const toggleSidebar = () => {
-    setIsOpen(!isOpen)
-    localStorage.setItem('__sidebar', (!isOpen).toString())
+    setIsOpen((prev) => {
+      const newState = !prev
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('__sidebar', newState.toString())
+      }
+      return newState
+    })
   }
 
   useEffect(() => {
@@ -28,7 +32,11 @@ export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   }, [])
 
-  return <SidebarContext.Provider value={{ isOpen, toggleSidebar }}>{children}</SidebarContext.Provider>
+  return (
+    <SidebarContext.Provider value={{ isOpen, toggleSidebar }}>
+      {children}
+    </SidebarContext.Provider>
+  )
 }
 
 export const useSidebar = () => {

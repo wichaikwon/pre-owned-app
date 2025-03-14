@@ -3,8 +3,9 @@ import { Chakra_Petch } from 'next/font/google'
 import './globals.css'
 import Wrapper from './components/Wrapper'
 import { LoginProvider } from '@/contexts/useLogin'
-import { Sidebar } from 'lucide-react'
+import 'react-toastify/dist/ReactToastify.css'
 import { SidebarProvider } from '@/contexts/useSidebar'
+import { ToastContainer } from 'react-toastify'
 
 const chakraPetch = Chakra_Petch({
   subsets: ['thai'],
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${chakraPetch.className}`}>
+        <ToastContainer />
         <LoginProvider>
           <SidebarProvider>
             <Wrapper>{children}</Wrapper>
