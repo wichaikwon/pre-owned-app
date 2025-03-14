@@ -5,9 +5,10 @@ import { useSidebar } from '@/contexts/useSidebar'
 import { useLogin } from '@/contexts/useLogin'
 import { Cylinder, LayoutDashboard, LogOut, Smartphone, Target } from 'lucide-react'
 import cx from 'classnames'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 const Sidebar: React.FC = () => {
   const pathname = usePathname()
+  const router = useRouter()
   const { isOpen } = useSidebar()
   const { logoutUser } = useLogin()
   return (
@@ -25,6 +26,9 @@ const Sidebar: React.FC = () => {
           {isOpen && <button className="cursor-pointer">Dashboard</button>}
         </div>
         <div
+          onClick={() => {
+            router.push('/admin/brands')
+          }}
           className={cx(
             'flex cursor-pointer items-center gap-2 p-4',
             pathname === '/admin/brands' ? 'font-bold text-red-700' : 'text-black hover:text-red-600'

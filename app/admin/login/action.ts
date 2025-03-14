@@ -17,7 +17,6 @@ export const loginAction = async (username: string, password: string) => {
       closeOnClick: false,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
       theme: 'colored',
       transition: Bounce,
     })

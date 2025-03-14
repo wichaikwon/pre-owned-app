@@ -50,7 +50,7 @@ const Admin: React.FC = () => {
             type="password"
             {...register('password', { required: true })}
           />
-          <button className="cursor-pointer rounded-md bg-green-500 p-2 text-white" type="submit">
+          <button className=" rounded-md bg-green-500 p-2 text-white" type="submit">
             {loading ? 'Loading...' : 'Login'}
           </button>
         </form>
