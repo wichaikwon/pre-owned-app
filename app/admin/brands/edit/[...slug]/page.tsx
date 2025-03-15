@@ -1,8 +1,9 @@
 'use client'
-import { fetchBrand, updateBrand } from '@/lib/brands'
+import { fetchBrand } from '@/lib/brands/getBrand'
+import { updateBrand } from '@/lib/brands/updateBrand'
 import { redirect, usePathname } from 'next/navigation'
 import React, { useEffect } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type Brand = {
   brandName: string
@@ -28,9 +29,15 @@ const EditBrand: React.FC = () => {
     }, 1000)
   }
   return (
-    <div>
-      <h1>Edit Brand</h1>
-
+    <div className="flex flex-col gap-4 px-10">
+      <div className="flex items-center justify-between py-2">
+        <h1>Edit Brand</h1>
+        <button
+          onClick={() => redirect('/admin/brands')}
+          className="rounded-md bg-slate-400 px-4 py-2 text-white hover:bg-slate-500">
+          Back
+        </button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" className="rounded-md border p-2" placeholder="Brand Name" {...register('brandName')} />
         <button type="submit" className="rounded-md bg-blue-500 px-4 py-2 text-white">
