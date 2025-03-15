@@ -1,11 +1,12 @@
 import axios from 'axios'
-import { pathBrandsAPI } from './api'
+import { pathAPI, pathBrandsAPI } from './api'
 import { Bounce, toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+import { redirect } from 'next/dist/server/api-utils'
 
 export const fetchBrands = async () => {
   try {
-    const response = await axios.get(`${pathBrandsAPI}/brands/brands`)
+    const response = await axios.get(`${pathAPI}/brands/brands`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Brands', error)
@@ -15,7 +16,7 @@ export const fetchBrands = async () => {
 
 export const fetchBrand = async (id: string) => {
   try {
-    const response = await axios.get(`${pathBrandsAPI}/brands/brand/${id}`)
+    const response = await axios.get(`${pathAPI}/brands/brand?id=${id}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Brand', error)
@@ -24,10 +25,15 @@ export const fetchBrand = async (id: string) => {
 }
 
 export const updateBrand = async (id: string, brandName: string) => {
+  
   try {
-    const response = await axios.put(`${pathBrandsAPI}/brands/brand/${id}`, {
-      brandName,
-    })
+    const response = await axios.put(
+      `${pathBrandsAPI}/brands/brand/update?id=${id}`,
+      {
+        brandName,
+      },
+      { withCredentials: true }
+    )
     toast.success('Logined Success !!', {
       position: 'bottom-right',
       autoClose: 2000,
@@ -37,6 +43,7 @@ export const updateBrand = async (id: string, brandName: string) => {
       theme: 'colored',
       transition: Bounce,
     })
+    
     return response.data
   } catch (error) {
     console.log(error)
@@ -54,7 +61,6 @@ export const updateBrand = async (id: string, brandName: string) => {
 }
 export const deleteBrand = async (id: string) => {
   try {
-    const response = await axios.put(`${pathBrandsAPI}/brands/brand/delete/${id}`)
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this item',
@@ -62,9 +68,13 @@ export const deleteBrand = async (id: string) => {
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it',
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         Swal.fire('Deleted!', 'Your item has been deleted.', 'success')
+        const response = await axios.put(`${pathBrandsAPI}/brands/brand/delete?id=${id}`, { withCredentials: true })
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
         return response.data
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire('Cancelled', 'Your item is safe :)', 'error')
