@@ -8,7 +8,7 @@ interface SidebarContextProps {
 }
 
 const SidebarContext = createContext<SidebarContextProps>({
-  isOpen: false,
+  isOpen: true,
   toggleSidebar: () => {},
 })
 

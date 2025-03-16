@@ -40,6 +40,9 @@ const Sidebar: React.FC = () => {
           {isOpen && <button className="cursor-pointer">Brands</button>}
         </div>
         <div
+          onClick={() => {
+            router.push('/admin/models')
+          }}
           className={cx(
             'flex cursor-pointer items-center gap-2 p-4',
             pathname === '/admin/models' ? 'font-bold text-red-700' : 'text-black hover:text-red-600'
