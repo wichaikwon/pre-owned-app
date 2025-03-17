@@ -6,12 +6,12 @@ interface ModalProps {
   onSubmit: (brandCode: string, brandName: string) => Promise<{ success: boolean; error?: string }>
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const BrandModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   const [brandCode, setBrandCode] = useState('')
   const [brandName, setBrandName] = useState('')
   const [error, setError] = useState<string | ''>('')
 
-  if (!isOpen) return 
+  if (!isOpen) return
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,7 +20,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
       setError(result.error)
     } else {
       setError('')
+      setBrandCode('')
+      setBrandName('')
     }
+    onClose()
   }
 
   return (
@@ -41,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
               autoFocus
               required
             />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-sm text-red-500">{error}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label>Brand Name</label>
@@ -73,4 +76,4 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
   )
 }
 
-export default Modal
+export default BrandModal

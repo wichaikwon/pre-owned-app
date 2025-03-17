@@ -1,6 +1,6 @@
 'use client'
 import { useLogin } from '@/contexts/useLogin'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, ReactNode } from 'react'
 
 interface ProtectedRouteProps {
@@ -8,12 +8,15 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const path = usePathname()
   const { token } = useLogin()
   const router = useRouter()
 
   useEffect(() => {
     if (!token) {
       router.push('/admin/login')
+    } else {
+      router.push(path)
     }
   }, [token, router])
 

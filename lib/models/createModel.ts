@@ -1,16 +1,16 @@
 import axios from 'axios'
-import { pathBrandsAPI } from '../api'
+import { pathModelsAPI } from '../api'
 import { Bounce, toast } from 'react-toastify'
 
-export const createBrand = async (brandCode: string, brandName: string) => {
+export const createModel = async (brandId: string, modelCode: string, modelName: string) => {
   try {
-    const response = await axios.post(`${pathBrandsAPI}/brands/brand/create`, {
-      brandCode: brandCode,
-      brandName: brandName,
-    })
-    console.log(brandCode, brandName, response.data)
+    const response = await axios.post(
+      `${pathModelsAPI}/models/model/create`,
+      { brandId, modelCode, modelName },
+      { withCredentials: true }
+    )
     if (response.data.success) {
-      toast.success('Brand created successfully!', {
+      toast.success('Model created successfully!', {
         position: 'bottom-right',
         autoClose: 2000,
         hideProgressBar: false,
@@ -21,7 +21,7 @@ export const createBrand = async (brandCode: string, brandName: string) => {
       })
       return { success: true, data: response.data.data }
     } else {
-      toast.error(response.data.error || 'brandCode already exists', {
+      toast.error(response.data.error || 'modelCode already exists', {
         position: 'bottom-right',
         autoClose: 2000,
         hideProgressBar: false,

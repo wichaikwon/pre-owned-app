@@ -2,6 +2,7 @@ import { pathLoginAPI } from '@/lib/api'
 import axios from 'axios'
 import { Bounce, toast } from 'react-toastify'
 import Swal from 'sweetalert2'
+
 export const loginAction = async (username: string, password: string) => {
   try {
     const response = await axios.post(`${pathLoginAPI}/auth/login`, { username, password })

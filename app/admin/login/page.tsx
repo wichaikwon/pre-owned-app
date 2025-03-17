@@ -11,7 +11,7 @@ type LoginFormInputs = {
 
 const Admin: React.FC = () => {
   const { register, handleSubmit } = useForm<LoginFormInputs>()
-  const { loginUser, logoutUser } = useLogin()
+  const { loginUser } = useLogin()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -34,7 +34,7 @@ const Admin: React.FC = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100">
       <div className="flex w-80 flex-col gap-4 rounded-md border bg-white p-4">
-        <p className="flex w-full justify-center text-4xl">Admin</p>  
+        <p className="flex w-full justify-center text-4xl">Admin</p>
         <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <p>Username</p>
           <input
@@ -50,7 +50,7 @@ const Admin: React.FC = () => {
             type="password"
             {...register('password', { required: true })}
           />
-          <button className=" rounded-md bg-green-500 p-2 text-white" type="submit">
+          <button className="rounded-md bg-green-500 p-2 text-white" type="submit">
             {loading ? 'Loading...' : 'Login'}
           </button>
         </form>

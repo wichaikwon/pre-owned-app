@@ -2,7 +2,7 @@
 import { SquarePen, Trash2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Pagination from '@/hooks/pagination'
 import Modal from '@/app/components/admin/brand/modal'
 import { fetchBrands } from '@/lib/brands/getBrand'
@@ -13,7 +13,6 @@ type Brand = {
   id: string
   brandCode: string
   brandName: string
-  isDeleted: boolean
 }
 
 const Brands: React.FC = () => {
@@ -38,15 +37,14 @@ const Brands: React.FC = () => {
     fetchBrands().then(setBrands)
   }, [])
 
-  const handleDelete = (id: string) => {
-    deleteBrand(id).then(() => fetchBrands().then(setBrands))
-    router.push('/admin/brands')
-  }
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
   }
-  const handleCreateBrand = async (brandCode: string, brandName: string): Promise<{ success: boolean; error?: string }> => {
+
+  const handleCreateBrand = async (
+    brandCode: string,
+    brandName: string
+  ): Promise<{ success: boolean; error?: string }> => {
     const result = await createBrand(brandCode, brandName)
 
     if (result.success) {
@@ -58,8 +56,12 @@ const Brands: React.FC = () => {
 
     return result
   }
+  const handleDelete = (id: string) => {
+    deleteBrand(id).then(() => fetchBrands().then(setBrands))
+    router.push(pathname)
+  }
   return (
-    <div className="flex flex-col gap-4 px-10">
+    <div className="flex flex-col gap-2 px-10">
       <div className="flex items-center justify-between py-2">
         <h1>Brands</h1>
         <button
@@ -80,10 +82,9 @@ const Brands: React.FC = () => {
           <div className="flex w-full justify-start">Name</div>
           <div className="flex w-60 justify-center pr-4">Action</div>
         </div>
-        <div className="flex w-full flex-col items-center justify-between gap-4 py-2">
+        <div className="flex w-full flex-col items-center justify-between gap-2 py-2">
           {currentBrands.map(
-            (brand, idx) =>
-              !brand.isDeleted && (
+            (brand, idx) => (
                 <div key={idx} className="flex w-full items-center justify-between gap-4 border-b py-2">
                   <div className="flex w-full pl-6">{brand.brandCode}</div>
                   <div className="flex w-full justify-start">{brand.brandName}</div>
