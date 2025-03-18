@@ -1,14 +1,12 @@
 'use client'
 import { fetchBrand, fetchBrands } from '@/lib/brands/getBrand'
-import { updateBrand } from '@/lib/brands/updateBrand'
 import { fetchModel } from '@/lib/models/getModel'
 import { updateModel } from '@/lib/models/updateModel'
 import { useRouter, usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type Model = {
-  id: string
   brandId: string
   brandCode: string
   brandName: string
@@ -46,7 +44,6 @@ const EditBrand: React.FC = () => {
       .then((model) => {
         fetchBrand(model.brandId)
           .then((brand) => {
-            setValue('id', model.id)
             setValue('brandId', brand.brandId)
             setValue('brandCode', brand.brandCode)
             setValue('brandName', brand.brandName)
@@ -69,8 +66,7 @@ const EditBrand: React.FC = () => {
     fetchBrands().then(setBrands)
   }, [id, setValue])
   const onSubmit = (data: Model) => {
-    
-    updateModel(data.id, data.brandId ,data.brandCode, data.modelName)
+    updateModel(id, data.brandId, data.brandCode, data.modelName)
       .then(() => {
         router.push('/admin/models')
       })

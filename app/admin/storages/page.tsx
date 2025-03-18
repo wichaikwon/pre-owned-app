@@ -4,10 +4,10 @@ import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Pagination from '@/hooks/pagination'
-import Modal from '@/app/components/admin/brand/modal'
-import { fetchBrands } from '@/lib/brands/getBrand'
-import { deleteBrand } from '@/lib/brands/deleteBrand'
-import { createBrand } from '@/lib/brands/createBrand'
+import { fetchStorages } from '@/lib/storages/getStorage'
+import { createStorage } from '@/lib/storages/createStorage'
+import Modal from '@/app/components/admin/storage/modal'
+import { deleteStorage } from '@/lib/storages/deleteStroage'
 
 type Storages = {
   id: string
@@ -24,46 +24,48 @@ const Storages: React.FC = () => {
   const [isModal, setIsModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const brandsPerPage = 10
-  const filteredBrands = storages.filter(
-    (storage) =>
-      storage.storageValue.toLowerCase().includes(search.toLowerCase()) ||
-      storage.storageValue.toLowerCase().includes(search.toLowerCase())
+
+  const filteredBrands = storages.filter((storage) =>
+    storage.storageValue.toLowerCase().includes(search.toLowerCase())
   )
+
   const indexOfLastStorage = currentPage * brandsPerPage
   const indexOfFirstStorage = indexOfLastStorage - brandsPerPage
   const currentStorages = filteredBrands.slice(indexOfFirstStorage, indexOfLastStorage)
 
   useEffect(() => {
-    // fetchBrands().then(setBrands)
+    fetchStorages().then(setStorages)
   }, [])
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
   }
 
-  //   const handleCreateBrand = async (
-  //     brandCode: string,
-  //     brandName: string
-  //   ): Promise<{ success: boolean; error?: string }> => {
-  //     const result = await createBrand(brandCode, brandName)
+  const handleCreateStorage = async (
+    storageCode: string,
+    storageValue: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    const result = await createStorage(storageCode, storageValue)
 
-  //     if (result.success) {
-  //       console.log('Brand created:', result.data)
-  //       fetchBrands().then(setBrands)
-  //     } else {
-  //       console.error('Error:', result.error)
-  //     }
+    if (result.success) {
+      console.log('Storage created:', result.data)
+      fetchStorages().then(setStorages)
+    } else if (result) {
+      console.error('Error:', result.error)
+    }
 
-  //     return result
-  //   }
-  const handleDelete = (id: string) => {
-    // deleteBrand(id).then(() => fetchBrands().then(setBrands))
-    // router.push(pathname)
+    return result
   }
+
+  const handleDelete = (id: string) => {
+    deleteStorage(id).then(() => fetchStorages().then(setStorages))
+    router.push(pathname)
+  }
+
   return (
     <div className="flex flex-col gap-2 px-10">
       <div className="flex items-center justify-between py-2">
-        <h1>Brands</h1>
+        <h1>Storages</h1>
         <button
           className="flex items-center justify-center rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600"
           onClick={() => setIsModal(true)}>
@@ -75,7 +77,7 @@ const Storages: React.FC = () => {
           className="w-full rounded-md border p-2"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search brands..."
+          placeholder="Search storages..."
         />
         <div className="flex w-full items-center justify-between gap-4 border-b py-2 font-bold">
           <div className="flex w-full pl-4">Code</div>
@@ -111,7 +113,7 @@ const Storages: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
-      {/* <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateBrand} /> */}
+      <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateStorage} />
     </div>
   )
 }

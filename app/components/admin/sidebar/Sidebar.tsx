@@ -29,16 +29,16 @@ const Sidebar: React.FC = () => {
           { label: 'Models', icon: <Smartphone />, path: '/admin/models' },
           { label: 'Storages', icon: <Cylinder />, path: '/admin/storages' },
         ].map(({ label, icon, path }) => (
-          <div
+          <button
             key={path}
             onClick={() => router.push(path)}
             className={cx(
-              'flex items-center gap-2 p-4',
+              'flex w-full items-center gap-2 p-4 text-left',
               pathname === path ? 'font-bold text-red-700' : 'text-black hover:text-red-600'
             )}>
             {icon}
             {isOpen && <span className="cursor-pointer">{label}</span>}
-          </div>
+          </button>
         ))}
       </div>
       <div className="hover flex items-center gap-2 p-4 hover:text-red-600">
