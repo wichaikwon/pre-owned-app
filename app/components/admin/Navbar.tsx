@@ -8,7 +8,7 @@ const NavbarAdmin: React.FC = () => {
   const {username} = useLogin()
 
   return (
-    <div className="flex transform items-center justify-between border-b border-b-slate-500 px-10 py-2">
+    <div className="flex transform items-center justify-between border-b border-b-slate-500 px-4 md:px-8 py-2">
       <div className="cursor-pointer" onClick={toggleSidebar}>
         <Text />
       </div>

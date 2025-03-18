@@ -30,17 +30,17 @@ const Sidebar: React.FC = () => {
             'flex items-center gap-2 p-4',
             pathname ? 'font-bold text-red-700' : 'text-black hover:text-red-600'
           )}>
-          <Stethoscope />
+          <Stethoscope  size={28}/>
           {isOpen && <span className="cursor-pointer">LOGO</span>}
         </div>
         {[
-          { label: 'Dashboard', icon: <LayoutDashboard />, path: '/admin' },
-          { label: 'Brands', icon: <Target />, path: '/admin/brands' },
-          { label: 'Models', icon: <Smartphone />, path: '/admin/models' },
-          { label: 'Storages', icon: <Cylinder />, path: '/admin/storages' },
-          { label: 'phones', icon: <TabletSmartphone />, path: '/admin/phones' },
-          { label: 'Defects', icon: <ShieldAlert />, path: '/admin/defects' },
-          { label: 'Defect Choices', icon: <GripVertical />, path: '/admin/defect-choices' },
+          { label: 'Dashboard', icon: <LayoutDashboard size={28} />, path: '/admin' },
+          { label: 'Brands', icon: <Target size={28} />, path: '/admin/brands' },
+          { label: 'Models', icon: <Smartphone size={28} />, path: '/admin/models' },
+          { label: 'Storages', icon: <Cylinder size={28} />, path: '/admin/storages' },
+          { label: 'phones', icon: <TabletSmartphone size={28} />, path: '/admin/phones' },
+          { label: 'Defects', icon: <ShieldAlert size={28} />, path: '/admin/defects' },
+          { label: 'Choices', icon: <GripVertical size={28} />, path: '/admin/defect-choices' },
         ].map(({ label, icon, path }) => (
           <button
             key={path}
@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
         ))}
       </div>
       <div className="hover flex items-center gap-2 p-4 hover:text-red-600">
-        <LogOut />
+        <LogOut  size={28}/>
         {isOpen && (
           <button className="cursor-pointer" onClick={logoutUser}>
             Logout
