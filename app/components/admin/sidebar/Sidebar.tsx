@@ -3,7 +3,17 @@
 import React from 'react'
 import { useSidebar } from '@/contexts/useSidebar'
 import { useLogin } from '@/contexts/useLogin'
-import { Cylinder, LayoutDashboard, LogOut, Smartphone, Stethoscope, Target } from 'lucide-react'
+import {
+  Cylinder,
+  GripVertical,
+  LayoutDashboard,
+  LogOut,
+  ShieldAlert,
+  Smartphone,
+  Stethoscope,
+  TabletSmartphone,
+  Target,
+} from 'lucide-react'
 import cx from 'classnames'
 import { usePathname, useRouter } from 'next/navigation'
 const Sidebar: React.FC = () => {
@@ -28,6 +38,9 @@ const Sidebar: React.FC = () => {
           { label: 'Brands', icon: <Target />, path: '/admin/brands' },
           { label: 'Models', icon: <Smartphone />, path: '/admin/models' },
           { label: 'Storages', icon: <Cylinder />, path: '/admin/storages' },
+          { label: 'phones', icon: <TabletSmartphone />, path: '/admin/phones' },
+          { label: 'Defects', icon: <ShieldAlert />, path: '/admin/defects' },
+          { label: 'Defect Choices', icon: <GripVertical />, path: '/admin/defect-choices' },
         ].map(({ label, icon, path }) => (
           <button
             key={path}

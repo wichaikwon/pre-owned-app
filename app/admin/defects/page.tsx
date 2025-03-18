@@ -1,77 +1,56 @@
 'use client'
-
-import Modal from '@/app/components/admin/model/modal'
 import Pagination from '@/hooks/pagination'
-import { createModel } from '@/lib/models/createModel'
-import { deleteModel } from '@/lib/models/deleteModel'
-import { fetchModels } from '@/lib/models/getModel'
-import { PenSquare, Trash2 } from 'lucide-react'
+import { fetchDefects } from '@/lib/defects/getDefect'
+import { PenSquare, SquarePen, Trash2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-type Model = {
+type Defect = {
   id: string
-  brandId: string
-  modelCode: string
-  modelName: string
+  defectCode: string
+  description: string
 }
-const Models: React.FC = () => {
+const Defects: React.FC = () => {
+  const router = useRouter()
   const pathname = usePathname()
   const { handleSubmit } = useForm()
-  const router = useRouter()
-  const [models, setModels] = useState<Model[]>([])
+  const [defects, setDefects] = useState<Defect[]>([])
   const [search, setSearch] = useState('')
   const [isModal, setIsModal] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
-  const modelsPerPage = 10
-  const filteredModels = models.filter(
-    (model) =>
-      model.modelName.toLowerCase().includes(search.toLowerCase()) ||
-      model.modelCode.toLowerCase().includes(search.toLowerCase())
+  const defectsPerPage = 10
+  const filteredDefects = defects.filter(
+    (defect) =>
+      defect.description.toLowerCase().includes(search.toLowerCase()) ||
+      defect.defectCode.toLowerCase().includes(search.toLowerCase())
   )
-  const indexOfLastModel = currentPage * modelsPerPage
-  const indexOfFirstModel = indexOfLastModel - modelsPerPage
-  const currentModels = filteredModels.slice(indexOfFirstModel, indexOfLastModel)
-  useEffect(() => {
-    fetchModels().then(setModels)
-  }, [])
+  const indexOfLastDefect = currentPage * defectsPerPage
+  const indexOfFirstDefect = indexOfLastDefect - defectsPerPage
+  const currentDefects = filteredDefects.slice(indexOfFirstDefect, indexOfLastDefect)
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
   }
+  useEffect(() => {
+    fetchDefects().then(setDefects)
+  }, [])
 
-  const handleCreate = async (
-    brandId: string,
-    modelCode: string,
-    modelName: string
-  ): Promise<{ success: boolean; error?: string }> => {
-    const result = await createModel(brandId, modelCode, modelName)
-    if (result.success) {
-      console.log('Model created:', result.data)
-      fetchModels().then(setModels)
-    } else {
-      console.error('Error:', result.error)
-    }
-    return result
-  }
   const handleDelete = (id: string) => {
-    deleteModel(id).then(() => fetchModels().then(setModels))
-    router.push(pathname)
+    // deleteDefect(id).then(() => fetchDefects().then(setDefects))
   }
+
   return (
     <div className="flex flex-col gap-2 px-10">
       <div className="flex items-center justify-between py-2">
-        <h1>Model</h1>
-        <button
-          onClick={() => setIsModal(true)}
-          className="flex items-center justify-center rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600">
+        <h1>Defects</h1>
+        <button className="flex items-center justify-center rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600">
           Create
         </button>
       </div>
       <div className="flex w-full flex-col items-center justify-center gap-2">
         <input
           className="w-8/12 rounded-md border p-2"
-          placeholder="Search models..."
+          placeholder="Search phones..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -80,8 +59,8 @@ const Models: React.FC = () => {
             <thead>
               <tr className="bg-gray-100">
                 {[
-                  'Model Code',
-                  'Model Name',
+                  'Defect Code',
+                  'Defect Name',
                   'Actions',
                 ].map((header, idx) => (
                   <th key={idx} className="border border-gray-300 px-4 py-2 text-center">
@@ -91,18 +70,18 @@ const Models: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {currentModels.map((model, idx) => (
+              {currentDefects.map((defect, idx) => (
                 <tr key={idx} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-4 py-2 text-center">{model.modelCode}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">{model.modelName}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">{defect.defectCode}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">{defect.description}</td>
                   <td className="border border-gray-300 px-4 py-2 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <button
-                        onClick={() => router.push(`${pathname}/edit/${model.id}`)}
+                        onClick={() => router.push(`${pathname}/edit/${defect.id}`)}
                         className="flex items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
                         <PenSquare size={16} />
                       </button>
-                      <form onSubmit={handleSubmit(() => handleDelete(model.id))}>
+                      <form onSubmit={handleSubmit(() => handleDelete(defect.id))}>
                         <button
                           type="submit"
                           className="flex shrink-0 items-center justify-center rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600">
@@ -118,13 +97,13 @@ const Models: React.FC = () => {
         </div>
         <Pagination
           currentPage={currentPage}
-          totalItems={filteredModels.length}
-          itemsPerPage={modelsPerPage}
+          totalItems={filteredDefects.length}
+          itemsPerPage={defectsPerPage}
           onPageChange={handlePageChange}
         />
       </div>
-      <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreate} />
     </div>
   )
 }
-export default Models
+
+export default Defects
