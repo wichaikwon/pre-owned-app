@@ -1,6 +1,6 @@
 'use client'
 import Pagination from '@/hooks/pagination'
-import { fetchDefectChoices } from '@/lib/defect-choices/getDefectChoices'
+import { fetchDefectChoices } from '@/lib/defectChoices/getDefectChoices'
 import { fetchDefects } from '@/lib/defects/getDefect'
 import { PenSquare, Trash2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
@@ -12,7 +12,7 @@ type DefectChoice = {
   id: string
   defectId: string
   defectCode: string
-  description: string
+  defectName: string
   choiceCode: string
   choiceName: string
 }
@@ -30,7 +30,7 @@ const DefectChoices: React.FC = () => {
   const filteredDefectChoices = defectChoices.filter(
     (defectChoice) =>
       defectChoice.defectCode.toLowerCase().includes(search.toLowerCase()) ||
-      defectChoice.description.toLowerCase().includes(search.toLowerCase()) ||
+      defectChoice.defectName.toLowerCase().includes(search.toLowerCase()) ||
       defectChoice.choiceCode.toLowerCase().includes(search.toLowerCase()) ||
       defectChoice.choiceName.toLowerCase().includes(search.toLowerCase())
   )
@@ -45,14 +45,14 @@ const DefectChoices: React.FC = () => {
 
   useEffect(() => {
     fetchDefectChoices().then((defectChoice) => {
-      fetchDefects().then((defect: { id: string; defectCode: string; description: string }[]) => {
+      fetchDefects().then((defect: { id: string; defectCode: string; defectName: string }[]) => {
         setDefectChoices(
           defectChoice.map((defectChoice: DefectChoice) => {
             const defectData = defect.find((d) => d.id === defectChoice.defectId)
             return {
               ...defectChoice,
               defectCode: defectData?.defectCode,
-              description: defectData?.description,
+              defectName: defectData?.defectName,
             }
           })
         )
@@ -77,7 +77,7 @@ const DefectChoices: React.FC = () => {
         renderRow={(defectChoice: DefectChoice) => (
           <>
             <td className="border border-gray-300 px-4 py-2 text-center">{defectChoice.defectCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{defectChoice.description}</td>
+            <td className="border border-gray-300 px-4 py-2 text-center">{defectChoice.defectName}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{defectChoice.choiceCode}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{defectChoice.choiceName}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">

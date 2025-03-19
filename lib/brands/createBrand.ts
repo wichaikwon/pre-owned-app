@@ -33,7 +33,8 @@ export const createBrand = async (brandCode: string, brandName: string) => {
       return { success: false, error: response.data.error }
     }
   } catch (error: any) {
-    toast.error('An unexpected error occurred.', {
+    const errorMessage = error.response?.data?.error || error.message || 'An unexpected error occurred.';
+    toast.error(errorMessage, {
       position: 'bottom-right',
       autoClose: 2000,
       hideProgressBar: false,
@@ -41,7 +42,7 @@ export const createBrand = async (brandCode: string, brandName: string) => {
       draggable: true,
       theme: 'colored',
       transition: Bounce,
-    })
-    return { success: false, error: 'An unexpected error occurred.' }
+    });
+    return { success: false, error: errorMessage };
   }
 }

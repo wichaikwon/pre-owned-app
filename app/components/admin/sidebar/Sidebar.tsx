@@ -41,6 +41,8 @@ const Sidebar: React.FC = () => {
           { label: 'phones', icon: <TabletSmartphone size={28} />, path: '/admin/phones' },
           { label: 'Defects', icon: <ShieldAlert size={28} />, path: '/admin/defects' },
           { label: 'Choices', icon: <GripVertical size={28} />, path: '/admin/defect-choices' },
+          { label: 'test', icon: <GripVertical size={28} />, path: '/admin/config-brands' },
+          { label: 'test-choices', icon: <GripVertical size={28} />, path: '/admin/test-choices' },
         ].map(({ label, icon, path }) => (
           <button
             key={path}

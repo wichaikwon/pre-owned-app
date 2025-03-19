@@ -10,7 +10,7 @@ import Table from '@/app/components/admin/table/Table'
 type Defect = {
   id: string
   defectCode: string
-  description: string
+  defectName: string
 }
 
 const Defects: React.FC = () => {
@@ -25,8 +25,8 @@ const Defects: React.FC = () => {
 
   const filteredDefects = defects.filter(
     (defect) =>
-      defect.description.toLowerCase().includes(search.toLowerCase()) ||
-      defect.defectCode.toLowerCase().includes(search.toLowerCase())
+      defect.defectName?.toLowerCase().includes(search.toLowerCase()) ||
+      defect.defectCode?.toLowerCase().includes(search.toLowerCase())
   )
 
   const indexOfLastDefect = currentPage * defectsPerPage
@@ -58,7 +58,7 @@ const Defects: React.FC = () => {
         renderRow={(defect: Defect) => (
           <>
             <td className="border border-gray-300 px-4 py-2 text-center">{defect.defectCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{defect.description}</td>
+            <td className="border border-gray-300 px-4 py-2 text-center">{defect.defectName}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">
               <div className="flex items-center justify-center gap-2">
                 <button
