@@ -1,5 +1,6 @@
 'use client'
 import { PenSquare, SquarePen, Trash2 } from 'lucide-react'
+import Table from '@/app/components/admin/table/Table'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -62,69 +63,42 @@ const Storages: React.FC = () => {
 
   return (
     <div className="flex flex-col px-4 md:px-8">
-      <div className="flex items-center justify-between py-2">
-        <h1>Storages</h1>
-        <button
-          className="flex items-center justify-center rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-          onClick={() => setIsModal(true)}>
-          Create
-        </button>
-      </div>
-      <div className="flex w-full flex-col items-center justify-center gap-2">
-        <input
-          className="w-8/12 rounded-md border p-2"
-          placeholder="Search phones..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <div className="w-8/12 overflow-x-auto rounded-md shadow-lg">
-          <table className="border-collapse border border-gray-300 whitespace-nowrap w-full">
-            <thead>
-              <tr className="bg-gray-100">
-                {[
-                  'Storage Code',
-                  'Storage Value',
-                  'Actions',
-                ].map((header, idx) => (
-                  <th key={idx} className="border border-gray-300 px-4 py-2 text-center">
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {currentStorages.map((storage, idx) => (
-                <tr key={idx} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageCode}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageValue}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <button
-                        onClick={() => router.push(`${pathname}/edit/${storage.id}`)}
-                        className="flex items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
-                        <PenSquare size={16} />
-                      </button>
-                      <form onSubmit={handleSubmit(() => handleDelete(storage.id))}>
-                        <button
-                          type="submit"
-                          className="flex shrink-0 items-center justify-center rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600">
-                          <Trash2 size={16} />
-                        </button>
-                      </form>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <Pagination
-          currentPage={currentPage}
-          totalItems={filteredBrands.length}
-          itemsPerPage={brandsPerPage}
-          onPageChange={handlePageChange}
-        />
-      </div>
+      <Table
+        title="Storages"
+        headers={['Brand Code', 'Brand Name', 'Actions']}
+        data={currentStorages}
+        search={search}
+        onSearchChange={setSearch}
+        onCreate={() => setIsModal(true)}
+        renderRow={(storage: Storages) => (
+          <>
+            <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageCode}</td>
+            <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageValue}</td>
+            <td className="border border-gray-300 px-4 py-2 text-center">
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  onClick={() => router.push(`${pathname}/edit/${storage.id}`)}
+                  className="flex items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
+                  <PenSquare size={16} />
+                </button>
+                <form onSubmit={handleSubmit(() => handleDelete(storage.id))}>
+                  <button
+                    type="submit"
+                    className="flex shrink-0 items-center justify-center rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600">
+                    <Trash2 size={16} />
+                  </button>
+                </form>
+              </div>
+            </td>
+          </>
+        )}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalItems={filteredBrands.length}
+        itemsPerPage={brandsPerPage}
+        onPageChange={handlePageChange}
+      />
       <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateStorage} />
     </div>
   )

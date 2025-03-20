@@ -20,3 +20,12 @@ export const fetchConfigBrand = async (id: string) => {
     return []
   }
 }
+export const fetchConfigBrandByBrandId = async (id: string) => {
+  try {
+    const response = await axios.get(`${pathAPI}/brands/config-brands/brand?id=${id}`)
+    return response.data
+  } catch (error) {
+    console.log('Fail to fetch Config Brand by ID', error)
+    return []
+  }
+}

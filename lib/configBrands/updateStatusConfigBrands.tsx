@@ -3,7 +3,7 @@ import { pathBrandsAPI } from '../api'
 
 export const updateStatusConfigBrands = async (id: string) => {
   try {
-    const response = await axios.put(`${pathBrandsAPI}/brands/config-brand/update?id=${id}`, {
+    const response = await axios.put(`${pathBrandsAPI}/brands/config-brands/update?id=${id}`, {
       withCredentials: true,
     })
 
