@@ -20,3 +20,13 @@ export const fetchPriceDeduction = async (id: string) => {
     return []
   }
 }
+
+export const fetchPriceDeductionByPhoneId = async (phoneId: string) => {
+  try {
+    const response = await axios.get(`${pathAPI}/phones/price-deductions/phone?id=${phoneId}`)
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch Price Deduction', error)
+    return []
+  }
+}

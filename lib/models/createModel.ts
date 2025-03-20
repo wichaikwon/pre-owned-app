@@ -4,11 +4,9 @@ import { Bounce, toast } from 'react-toastify'
 
 export const createModel = async (brandId: string, modelCode: string, modelName: string) => {
   try {
-    const response = await axios.post(
-      `${pathModelsAPI}/models/model/create`,
-      { brandId, modelCode, modelName },
-      { withCredentials: true }
-    )
+    const response = await axios.post(`${pathModelsAPI}/models/model/create`, [{ brandId, modelCode, modelName }], {
+      withCredentials: true,
+    })
     if (response.data.success) {
       toast.success('Model created successfully!', {
         position: 'bottom-right',

@@ -10,7 +10,6 @@ export const createBrand = async (brandCode: string, brandName: string) => {
         brandName: brandName,
       }
     ])
-    console.log(brandCode, brandName, response.data)  
     if (response.data.success) {
       toast.success('Brand created successfully!', {
         position: 'bottom-right',

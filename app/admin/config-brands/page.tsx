@@ -3,9 +3,8 @@ import { fetchConfigBrands } from '@/lib/configBrands/getConfigBrands'
 import { updateStatusConfigBrands } from '@/lib/configBrands/updateStatusConfigBrands'
 import Table from '@/app/components/admin/table/Table'
 import Pagination from '@/hooks/pagination'
-import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Ban, CircleCheckBig, PenSquare, Trash2 } from 'lucide-react'
+import { Ban, CircleCheckBig, PenSquare } from 'lucide-react'
 
 type ConfigBrand = {
   id: string
@@ -76,7 +75,7 @@ const ConfigBrands: React.FC = () => {
             <td className="border border-gray-300 px-4 py-2 text-center">
               <div className="flex items-center justify-center">
                 {configBrand.isDeleted ? (
-                  <Ban className="text-red-500" />
+                  <Ban className="text-red-500 rotate-90" />
                 ) : (
                   <CircleCheckBig className="text-green-500" />
                 )}

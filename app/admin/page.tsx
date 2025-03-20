@@ -118,7 +118,7 @@ const Dashboard: React.FC = () => {
             <td className="border border-gray-300 px-4 py-2">
               <button
                 onClick={() =>
-                  router.push(`${pathname}/edit/${phone.id}/${phone.brandId}/${phone.modelId}/${phone.storageId}`)
+                  router.push(`${pathname}/edit/${phone.brandId}/${phone.modelId}/${phone.storageId}/${phone.id}`)
                 }
                 className="flex w-full items-center justify-center rounded-md bg-yellow-500 py-2 text-white hover:bg-yellow-600">
                 <PenSquare size={16} />

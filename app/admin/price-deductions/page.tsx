@@ -26,7 +26,7 @@ const PriceDeduction: React.FC = () => {
   const [priceDeduction, setPriceDeduction] = useState<PriceDeduction[]>([])
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const priceDeductionPerPage = 20
+  const priceDeductionPerPage = 10
   const filteredPriceDeduction = useMemo(
     () =>
       priceDeduction
@@ -104,7 +104,7 @@ const PriceDeduction: React.FC = () => {
             <td className="border border-gray-300 px-4 py-2 text-center">
               <div className="flex items-center justify-center">
                 {configBrand.isDeleted ? (
-                  <Ban className="text-red-500" />
+                  <Ban className="text-red-500 rotate-90" />
                 ) : (
                   <CircleCheckBig className="text-green-500" />
                 )}
