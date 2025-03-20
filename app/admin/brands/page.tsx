@@ -49,16 +49,16 @@ const Brands: React.FC = () => {
     brandName: string
   ): Promise<{ success: boolean; error?: string }> => {
     const result = await createBrand(brandCode, brandName)
-
     if (result.success) {
       console.log('Brand created:', result.data)
-      fetchBrands().then(setBrands)
+      fetchBrands().then(setBrands) 
     } else {
       console.error('Error:', result.error)
     }
-
+  
     return result
   }
+  
 
   const handleDelete = (id: string) => {
     deleteBrand(id).then(() => fetchBrands().then(setBrands))
