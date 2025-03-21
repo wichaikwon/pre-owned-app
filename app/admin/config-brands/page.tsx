@@ -55,7 +55,6 @@ const ConfigBrands: React.FC = () => {
       fetchConfigBrands().then(setConfigBrands)
     })
   }
-
   return (
     <div className="flex flex-col px-4 md:px-8">
       <Table

@@ -1,6 +1,6 @@
 'use client'
 
-import Modal from '@/app/components/admin/model/modal'
+import Modal from '@/app/components/admin/modal/ModelModal'
 import Pagination from '@/hooks/pagination'
 import { createModel } from '@/lib/models/createModel'
 import { deleteModel } from '@/lib/models/deleteModel'

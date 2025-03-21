@@ -4,16 +4,26 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 
 interface SidebarContextProps {
   isOpen: boolean
+  isSidebarOpen?: boolean
   toggleSidebar: () => void
+  sidebarOpen: () => void
+  sidebarClose: () => void
 }
 
 const SidebarContext = createContext<SidebarContextProps>({
   isOpen: true,
+  isSidebarOpen: false,
   toggleSidebar: () => {},
+  sidebarOpen: () => {},
+  sidebarClose: () => {},
 })
 
 export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false)
+
+  const sidebarOpen = () => setIsSidebarOpen(true)
+  const sidebarClose = () => setIsSidebarOpen(false)
 
   const toggleSidebar = () => {
     setIsOpen((prev) => {
@@ -33,7 +43,7 @@ export const SidebarProvider: React.FC<{ children: ReactNode }> = ({ children })
   }, [])
 
   return (
-    <SidebarContext.Provider value={{ isOpen, toggleSidebar }}>
+    <SidebarContext.Provider value={{ isOpen, toggleSidebar, sidebarClose, sidebarOpen , isSidebarOpen }}>
       {children}
     </SidebarContext.Provider>
   )

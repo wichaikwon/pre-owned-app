@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import Pagination from '@/hooks/pagination'
 import { fetchStorages } from '@/lib/storages/getStorage'
 import { createStorage } from '@/lib/storages/createStorage'
-import Modal from '@/app/components/admin/storage/modal'
+import Modal from '@/app/components/admin/modal/StorageModal'
 import { deleteStorage } from '@/lib/storages/deleteStroage'
 
 type Storages = {

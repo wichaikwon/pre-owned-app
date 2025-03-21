@@ -76,7 +76,7 @@ const EditBrand: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 px-10">
+    <div className="flex flex-col gap-4 px-4 md:px-8">
       <div className="flex items-center justify-between py-2">
         <h1>Edit Model</h1>
         <button

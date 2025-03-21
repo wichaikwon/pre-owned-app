@@ -3,9 +3,11 @@ import { fetchDefectChoices } from '@/lib/defectChoices/getDefectChoices'
 import { fetchDefects } from '@/lib/defects/getDefect'
 import { fetchPhones } from '@/lib/phones/getPhone'
 import { fetchPriceDeductionByPhoneId } from '@/lib/priceDeductions/getPriceDeduction'
-import { usePathname } from 'next/navigation'
+import { updatePriceDeductions } from '@/lib/priceDeductions/updateDeduction'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 type PriceDeduction = {
   id: string
@@ -24,6 +26,7 @@ type PriceDeduction = {
 }
 
 const EditDashboard: React.FC = () => {
+  const router = useRouter()
   const pathname = usePathname()
   const parts = pathname.split('/')
   const id = parts[parts.length - 1]
@@ -34,10 +37,13 @@ const EditDashboard: React.FC = () => {
 
   const groupedDefects = useMemo(
     () =>
-      priceDeduction.reduce((acc, { defectName, ...deduction }) => {
-        (acc[defectName] ||= []).push({ defectName, ...deduction })
-        return acc
-      }, {} as Record<string, PriceDeduction[]>),
+      priceDeduction.reduce(
+        (acc, { defectName, ...deduction }) => {
+          ;(acc[defectName] ||= []).push({ defectName, ...deduction })
+          return acc
+        },
+        {} as Record<string, PriceDeduction[]>
+      ),
     [priceDeduction]
   )
 
@@ -67,15 +73,21 @@ const EditDashboard: React.FC = () => {
   }, [id, setValue])
 
   const onSubmit = (data: Record<string, number>) => {
-    console.log('Form Data:', data)
-    Object.entries(data).map(([key, value]) => {
-      const [defectName, id] = key.split('+')
-      return {
-        id,
-        defectName,
-        deduction: value,
-      }
+    Object.entries(data).forEach(([key, value]) => {
+      const [_, id] = key.split('+')
+      updatePriceDeductions([{ id, deduction: value }])
     })
+    setTimeout(() => {
+      toast.success('updated Deductions Success', {
+        position: 'bottom-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'colored',
+      })
+      router.push('/admin')
+    }, 1000)
   }
 
   return (
@@ -98,10 +110,10 @@ const EditDashboard: React.FC = () => {
                     className="rounded-md border bg-white p-2"
                     type="number"
                     {...register(`${deduction.defectName}+${deduction.id}`, {
-                      valueAsNumber: true, 
+                      valueAsNumber: true,
                       onChange: (e) => {
                         const value = e.target.value
-                        const numericValue = value === '' ? 0 : Math.max(0, Number(value)) 
+                        const numericValue = value === '' ? 0 : Math.max(0, Number(value))
                         setValue(`${deduction.defectName}+${deduction.id}`, numericValue)
                       },
                     })}

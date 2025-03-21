@@ -4,7 +4,7 @@ import { fetchPhones } from '@/lib/phones/getPhone'
 import { fetchModels } from '@/lib/models/getModel'
 import { fetchBrands } from '@/lib/brands/getBrand'
 import { fetchStorages } from '@/lib/storages/getStorage'
-import { PenSquare, Trash2 } from 'lucide-react'
+import { PenSquare } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -107,7 +107,6 @@ const Dashboard: React.FC = () => {
           'Model Name',
           'Storage Code',
           'Storage Value',
-          'Delete',
         ]}
         data={currentPhones}
         search={search}
@@ -134,15 +133,6 @@ const Dashboard: React.FC = () => {
             <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandName}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelCode}</td>
             <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              <form onSubmit={handleSubmit(() => handleDelete(phone.id))}>
-                <button
-                  onClick={() => handleDelete(phone.id)}
-                  className="flex w-full items-center justify-center rounded-md bg-red-500 py-2 text-white hover:bg-red-600">
-                  <Trash2 size={16} />
-                </button>
-              </form>
-            </td>
           </>
         )}
       />
