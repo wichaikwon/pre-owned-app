@@ -21,21 +21,22 @@ export const fetchModel = async (id: string) => {
   }
 }
 
-export const finalPrice = async (phoneId: string, choiceId: string) => {
+export const fetchModelsByBrandid = async (brandId: string) => {
   try {
-    const response = await axios.post(
-      `${pathAPI}/models/finalPrice?id=${phoneId}`,
-      [
-        {
-          phoneId,
-          choiceId,
-        },
-      ],
-      { withCredentials: true }
-    )
+    const response = await axios.get(`${pathAPI}/models/models/brand?brand_id=${brandId}`, { withCredentials: true })
     return response.data
   } catch (error) {
-    console.error('Failed to fetch Final Price', error)
+    console.error('Failed to fetch Models By BrandId', error)
+    return []
+  }
+}
+
+export const fetchViewModelsByBrandId = async (brandId: string) => {
+  try {
+    const response = await axios.get(`${pathAPI}/phones/view-models?brand_id=${brandId}`, { withCredentials: true })
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch View Models By BrandId', error)
     return []
   }
 }

@@ -19,3 +19,31 @@ export const fetchPhone = async (id: string) => {
     return []
   }
 }
+
+export const finalPrice = async (phoneId: string, choiceId: string) => {
+  try {
+    const response = await axios.post(
+      `${pathAPI}/models/finalPrice?id=${phoneId}`,
+      [
+        {
+          phoneId,
+          choiceId,
+        },
+      ],
+      { withCredentials: true }
+    )
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch Final Price', error)
+    return []
+  }
+}
+export const fetchViewPhones = async () => {
+  try {
+    const response = await axios.get(`${pathAPI}/phones/view-phones`)
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch Phones', error)
+    return []
+  }
+}

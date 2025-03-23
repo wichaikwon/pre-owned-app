@@ -20,3 +20,12 @@ export const fetchStorage = async (id: string) => {
     return []
   }
 }
+export const fetchViewStoragesByModelId = async (modelId: string) => {
+  try {
+    const response = await axios.get(`${pathAPI}/phones/view-storages?model_id=${modelId}`, { withCredentials: true })
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch Storages By ModelId', error)
+    return []
+  }
+}

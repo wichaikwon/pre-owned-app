@@ -20,3 +20,13 @@ export const fetchBrand = async (id: string) => {
     return []
   }
 }
+
+export const fetchViewBrands = async () => {
+  try {
+    const response = await axios.get(`${pathAPI}/phones/view-brands`, { withCredentials: true })
+    return response.data
+  } catch (error) {
+    console.error('Failed to fetch View Brands', error)
+    return []
+  }
+}
