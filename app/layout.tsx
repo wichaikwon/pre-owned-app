@@ -6,6 +6,7 @@ import { LoginProvider } from '@/contexts/useLogin'
 import 'react-toastify/dist/ReactToastify.css'
 import { SidebarProvider } from '@/contexts/useSidebar'
 import { ToastContainer } from 'react-toastify'
+import { ResultProvider } from '@/contexts/useResult'
 
 const chakraPetch = Chakra_Petch({
   subsets: ['thai'],
@@ -27,7 +28,9 @@ export default function RootLayout({
         <ToastContainer />
         <LoginProvider>
           <SidebarProvider>
-            <Wrapper>{children}</Wrapper>
+            <ResultProvider>
+              <Wrapper>{children}</Wrapper>
+            </ResultProvider>
           </SidebarProvider>
         </LoginProvider>
       </body>

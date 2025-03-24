@@ -1,9 +1,17 @@
 'use client'
-import React from 'react'
-import SelectPhone from './section/SelectPhone'
+import React, { Fragment } from 'react'
+import SelectPhoneSection from './section/SelectPhoneSection'
+import InfoSection from './section/InfoSection'
+import WhyChooseUsSection from './section/WhyChooseUsSection'
 
 const Homepage: React.FC = () => {
-  return <SelectPhone />
+  return (
+    <Fragment>
+      <SelectPhoneSection />
+      <InfoSection />
+      <WhyChooseUsSection />
+    </Fragment>
+  )
 }
 
 export default Homepage

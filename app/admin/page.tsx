@@ -87,10 +87,6 @@ const Dashboard: React.FC = () => {
     setCurrentPage(page)
   }
 
-  const handleDelete = (id: string) => {
-    console.log(`Delete phone with id: ${id}`)
-  }
-
   return (
     <div className="flex flex-col px-4 md:px-8">
       <Table
@@ -111,7 +107,6 @@ const Dashboard: React.FC = () => {
         data={currentPhones}
         search={search}
         onSearchChange={setSearch}
-        onCreate={() => console.log('Open Create Modal')}
         renderRow={(phone: Phone) => (
           <>
             <td className="border border-gray-300 px-4 py-2">

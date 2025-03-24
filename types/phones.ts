@@ -1,15 +1,21 @@
 export type Brand = {
     brandId: string
+    brandCode : string
     brandName : string
+    isDeleted : boolean
 }
 export type Model ={
     modelId: string
     brandId : string
+    modelCode : string
     modelName : string
+    isDeleted : boolean
 }
 export type Storage = {
-    strorageId : string
+    storageId : string
+    storageCode : string
     storageValue : string
+    isDeleted : boolean
 }
 export type Phone = {
     phoneId : string

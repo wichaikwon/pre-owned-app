@@ -62,7 +62,6 @@ const DefectChoices: React.FC = () => {
 
   const handleDelete = (id: string) => {
     console.log(`Delete defect choice with id: ${id}`)
-    // deleteDefectChoice(id).then(() => fetchDefectChoices().then(setDefectChoices))
   }
 
   return (
@@ -73,7 +72,6 @@ const DefectChoices: React.FC = () => {
         data={currentDefectChoices}
         search={search}
         onSearchChange={setSearch}
-        onCreate={() => setIsModal(true)}
         renderRow={(defectChoice: DefectChoice) => (
           <>
             <td className="border border-gray-300 px-4 py-2 text-center">{defectChoice.defectCode}</td>

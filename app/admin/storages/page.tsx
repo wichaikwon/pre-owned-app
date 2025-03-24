@@ -26,7 +26,11 @@ const Storages: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const brandsPerPage = 10
 
-  const filteredBrands = storages.filter((storage) => storage.storageValue.toLowerCase().includes(search.toLowerCase()))
+  const filteredBrands = storages.filter(
+    (storage) =>
+      storage.storageCode.toLowerCase().includes(search.toLowerCase()) ||
+      storage.storageValue.toLowerCase().includes(search.toLowerCase())
+  )
 
   const indexOfLastStorage = currentPage * brandsPerPage
   const indexOfFirstStorage = indexOfLastStorage - brandsPerPage
@@ -65,7 +69,7 @@ const Storages: React.FC = () => {
     <div className="flex flex-col px-4 md:px-8">
       <Table
         title="Storages"
-        headers={['Brand Code', 'Brand Name', 'Actions']}
+        headers={['Storage Code', 'Storage Name', 'Actions']}
         data={currentStorages}
         search={search}
         onSearchChange={setSearch}

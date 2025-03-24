@@ -21,7 +21,7 @@ const ConfigBrands: React.FC = () => {
   const [configBrands, setConfigBrands] = useState<ConfigBrand[]>([])
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const brandsPerPage = 12
+  const brandsPerPage = 9
   const filteredConfigBrands = useMemo(
     () =>
       configBrands

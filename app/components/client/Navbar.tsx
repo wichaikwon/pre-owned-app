@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   const { sidebarOpen, isSidebarOpen } = useSidebar()
 
   return (
-    <nav className="flex justify-between px-4 md:gap-4 md:px-20 lg:px-96">
+    <nav className="container mx-auto flex justify-between px-4 md:px-20">
       {isSidebarOpen && <Sidebar />}
       <button onClick={sidebarOpen} className="flex items-center gap-4 md:hidden">
         <Grip size={32} />
@@ -26,7 +26,9 @@ const Navbar: React.FC = () => {
             />
           </Link>
           {['ขายสินค้า', 'บทความ', 'คำถามที่พบบ่อย', 'ติดต่อเรา'].map((item, idx) => (
-            <button key={idx} className="flex p-4 hover:border-b-2 border-b-2 border-b-transparent hover:border-b-yellow-400">
+            <button
+              key={idx}
+              className="flex border-b-2 border-b-transparent p-4 hover:border-b-2 hover:border-b-yellow-400">
               <Link href={'/admin/login'}>
                 <p>{item}</p>
               </Link>

@@ -21,7 +21,7 @@ export const fetchModel = async (id: string) => {
   }
 }
 
-export const fetchModelsByBrandid = async (brandId: string) => {
+export const fetchModelsByBrandId = async (brandId: string) => {
   try {
     const response = await axios.get(`${pathAPI}/models/models/brand?brand_id=${brandId}`, { withCredentials: true })
     return response.data

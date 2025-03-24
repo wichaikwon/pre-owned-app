@@ -6,7 +6,7 @@ import { fetchPriceDeductionByPhoneId } from '@/lib/priceDeductions/getPriceDedu
 import { updatePriceDeductions } from '@/lib/priceDeductions/updateDeduction'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 type PriceDeduction = {
@@ -86,19 +86,20 @@ const EditDashboard: React.FC = () => {
         draggable: true,
         theme: 'colored',
       })
-      router.push('/admin')
     }, 1000)
   }
 
   return (
     <div className="flex w-full flex-col gap-2 px-4 md:px-8">
+      <div className="flex items-center justify-between">
+        <button className="rounded-md bg-slate-200 p-2" onClick={() => router.push('/admin')}>
+          Back
+        </button>
+        <button type="submit" className="mt-4 rounded-md bg-blue-500 p-2 text-white">
+          Save
+        </button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex items-center justify-between">
-          <h1>Edit Dashboard</h1>
-          <button type="submit" className="mt-4 rounded-md bg-blue-500 p-2 text-white">
-            Save
-          </button>
-        </div>
         {Object.entries(groupedDefects).map(([defectName, deductions]) => (
           <div key={defectName} className="flex flex-col">
             <h2 className="text-lg">{defectName}</h2>

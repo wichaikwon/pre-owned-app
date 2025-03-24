@@ -1,13 +1,16 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import React from 'react'
-import Navbar from './client/Navbar'
-import Footer from './client/Footer'
 import NavbarAdmin from './admin/Navbar'
 import Sidebar from './admin/sidebar/Sidebar'
 import FooterAdmin from './admin/Footer'
 import ProtectedRoute from './ProtectedRoute'
 import { useSidebar } from '@/contexts/useSidebar'
+import Navbar from './client/Navbar'
+import Footer from './client/Footer'
+import SellGoodsSection from './client/section/SellGoodsSection'
+import FaqSection from './client/section/FaqSection'
+import FooterSection from './client/section/FooterSection'
 
 const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const pathname = usePathname()
@@ -33,12 +36,17 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     )
   }
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen flex-col">
       <div className="flex flex-1 flex-col">
         <Navbar />
-        <div className="min-h-0 flex-1 overflow-auto">{children}</div>
-        <Footer />
+        <div className="min-h-0 flex-1">
+          {children}
+          <SellGoodsSection />
+          <FaqSection />
+          <FooterSection />
+        </div>
       </div>
+      <Footer />
     </div>
   )
 }
