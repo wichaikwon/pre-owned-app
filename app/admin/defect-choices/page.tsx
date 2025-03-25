@@ -7,6 +7,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Table from '@/app/components/admin/table/Table'
+import { createDefectChoices } from '@/lib/defectChoices/createDefectChoices'
+import DefectChoiceModal from '@/app/components/admin/modal/DefectChoiceModal'
+import { deleteDefectChoices } from '@/lib/defectChoices/deleteDefectChoices'
 
 type DefectChoice = {
   id: string
@@ -29,10 +32,10 @@ const DefectChoices: React.FC = () => {
 
   const filteredDefectChoices = defectChoices.filter(
     (defectChoice) =>
-      defectChoice.defectCode.toLowerCase().includes(search.toLowerCase()) ||
-      defectChoice.defectName.toLowerCase().includes(search.toLowerCase()) ||
-      defectChoice.choiceCode.toLowerCase().includes(search.toLowerCase()) ||
-      defectChoice.choiceName.toLowerCase().includes(search.toLowerCase())
+      defectChoice.defectCode?.toLowerCase().includes(search.toLowerCase()) ||
+      defectChoice.defectName?.toLowerCase().includes(search.toLowerCase()) ||
+      defectChoice.choiceCode?.toLowerCase().includes(search.toLowerCase()) ||
+      defectChoice.choiceName?.toLowerCase().includes(search.toLowerCase())
   )
 
   const indexOfLastDefectChoice = currentPage * defectChoicesPerPage
@@ -60,8 +63,41 @@ const DefectChoices: React.FC = () => {
     })
   }, [])
 
+  const handleData = () => {
+    fetchDefectChoices().then((defectChoice) => {
+      fetchDefects().then((defect: { id: string; defectCode: string; defectName: string }[]) => {
+        setDefectChoices(
+          defectChoice.map((defectChoice: DefectChoice) => {
+            const defectData = defect.find((d) => d.id === defectChoice.defectId)
+            return {
+              ...defectChoice,
+              defectCode: defectData?.defectCode,
+              defectName: defectData?.defectName,
+            }
+          })
+        )
+      })
+    })
+  }
   const handleDelete = (id: string) => {
-    console.log(`Delete defect choice with id: ${id}`)
+    deleteDefectChoices(id).then(() => fetchDefectChoices().then(setDefectChoices))
+  }
+
+  const handleCreate = async (
+    brandId: string,
+    modelCode: string,
+    modelName: string
+  ): Promise<{ success: boolean; error?: string }> => {
+    const result = await createDefectChoices(brandId, modelCode, modelName)
+    if (result?.success) {
+      console.log('Defect created:', result.data)
+      fetchDefectChoices().then(setDefectChoices)
+      return { success: true }
+    } else if (result) {
+      console.error('Error:', result.error)
+      return { success: false, error: result.error }
+    }
+    return { success: false, error: 'Unexpected error occurred' }
   }
 
   return (
@@ -98,7 +134,11 @@ const DefectChoices: React.FC = () => {
                     className="rounded-md bg-yellow-400 p-2 hover:bg-yellow-500">
                     <PenSquare size={16} />
                   </button>
-                  <form onSubmit={handleSubmit(() => handleDelete(defectChoice.id))}>
+                  <form
+                    onSubmit={handleSubmit(() => {
+                      handleDelete(defectChoice.id)
+                      handleData()
+                    })}>
                     <button type="submit" className="rounded-md bg-red-400 p-2 hover:bg-red-500">
                       <Trash2 size={16} />
                     </button>
@@ -114,7 +154,7 @@ const DefectChoices: React.FC = () => {
           itemsPerPage={defectChoicesPerPage}
           onPageChange={handlePageChange}
         />
-        {/* <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreate} /> */}
+        <DefectChoiceModal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreate} />
       </div>
     </div>
   )

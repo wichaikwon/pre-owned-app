@@ -30,7 +30,6 @@ type Phone = {
 const Dashboard: React.FC = () => {
   const pathname = usePathname()
   const router = useRouter()
-  const { handleSubmit } = useForm()
   const [phones, setPhones] = useState<Phone[]>([])
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)

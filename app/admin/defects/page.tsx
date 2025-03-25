@@ -6,6 +6,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Table from '@/app/components/admin/table/Table'
+import DefectMaodal from '@/app/components/admin/modal/DefectModal'
+import { createDefect } from '@/lib/defects/createDefect'
+import { deleteDefect } from '@/lib/defects/deleteDefect'
 
 type Defect = {
   id: string
@@ -41,9 +44,24 @@ const Defects: React.FC = () => {
     fetchDefects().then(setDefects)
   }, [])
 
+  const handleCreate = async (
+    defectCode: string,
+    defectName: string
+  ): Promise<{ success: boolean; error?: string }> => {
+      const result = await createDefect(defectCode, defectName)
+      if (result && 'success' in result) {
+        console.log('Defect created:', result)
+        fetchDefects().then(setDefects)
+        return result
+      } else {
+        const errorResult = { success: false, error: 'An unexpected error occurred' }
+        console.error('Error:', errorResult)
+        return errorResult
+      }
+  }
+
   const handleDelete = (id: string) => {
-    console.log(`Delete defect with id: ${id}`)
-    // deleteDefect(id).then(() => fetchDefects().then(setDefects))
+    deleteDefect(id).then(() => fetchDefects().then(setDefects))
   }
 
   return (
@@ -95,6 +113,7 @@ const Defects: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
+      <DefectMaodal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreate} />
     </div>
   )
 }
