@@ -21,6 +21,7 @@ export const deleteDefect = async (id: string) => {
       }
     })
   } catch (error) {
+    console.error('Error in deleteDefect:', error)
     Swal.fire({
       icon: 'error',
       title: 'Oops...',

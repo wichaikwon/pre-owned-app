@@ -1,5 +1,5 @@
 'use client'
-import { PenSquare, SquarePen, Trash2 } from 'lucide-react'
+import { PenSquare, Trash2 } from 'lucide-react'
 import Table from '@/app/components/admin/table/Table'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'

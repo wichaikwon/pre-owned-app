@@ -53,7 +53,9 @@ const SelectPhoneSection: React.FC = () => {
     setCurrIndex(index)
   }
   const handlePhone = () => {
-    phone && router.push(`/detail/${phone.phoneId}`)
+    if (phone) {
+      router.push(`/detail/${phone.phoneId}`)
+    }
   }
   return (
     <div className="flex flex-col md:flex-row bg-gradient-to-t from-yellow-500 to-yellow-300">
@@ -196,9 +198,9 @@ const SelectPhoneSection: React.FC = () => {
                                 storageId: storage.storageId,
                                 storageValue: storage.storageValue,
                               })
-                              selectedBrand &&
-                                selectedModel &&
+                              if (selectedBrand && selectedModel) {
                                 SearchPhone(selectedBrand.brandId, selectedModel.modelId, storage.storageId)
+                              }
 
                               setIsOpenStorage(false)
                             }}

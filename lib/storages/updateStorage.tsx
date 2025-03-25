@@ -21,6 +21,7 @@ export const updateStorage = async (id: string, storageCode: string, storageValu
 
     return response.data
   } catch (error) {
+    console.log('Error in updateStorage:', error)
     toast.error('Failed to update Storage', {
       position: 'bottom-right',
       autoClose: 2000,

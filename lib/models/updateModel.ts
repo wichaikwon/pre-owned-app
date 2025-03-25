@@ -20,6 +20,7 @@ export const updateModel = async (id: string, brandId: string, modelCode: string
     })
     return response.data
   } catch (error) {
+    console.log('Error in updateModel:', error)
     toast.error('Failed to update Model', {
       position: 'bottom-right',
       autoClose: 2000,

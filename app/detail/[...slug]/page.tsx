@@ -4,8 +4,8 @@ import { useResult } from '@/contexts/useResult'
 import { fetchViewPhoneWithDeductionsByPhoneId, finalPrice } from '@/lib/phones/getPhone'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { Fragment, useEffect, useMemo, useState } from 'react'
-import { set, useForm } from 'react-hook-form'
+import React, { Fragment, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 type Phone = {
   brandId: string
@@ -45,31 +45,25 @@ const Detail: React.FC = () => {
   }, [slug])
   if (!phone) return <div>Loading...</div>
 
-  const groupedDefects = useMemo(
-    () =>
-      phone.reduce(
-        (acc, { defectName, ...deduction }) => {
-          ;(acc[defectName] ||= []).push({ defectName, ...deduction })
-          return acc
-        },
-        {} as Record<string, Phone[]>
-      ),
-    [phone]
+  const groupedDefects = (phone || []).reduce(
+    (acc, { defectName, ...deduction }) => {
+      ;(acc[defectName] ||= []).push({ defectName, ...deduction })
+      return acc
+    },
+    {} as Record<string, Phone[]>
   )
-  useEffect(() => {
-    if (Object.keys(groupedDefects).length > 0) {
-      setOpenModal(Object.keys(groupedDefects)[0])
-    }
-  }, [groupedDefects])
 
   const handleOpenModal = (currentDefect: string) => {
     const defectKeys = Object.keys(groupedDefects)
     const currentIndex = defectKeys.indexOf(currentDefect)
     const nextDefect = defectKeys[(currentIndex + 1) % defectKeys.length]
-    currentIndex !== defectKeys.length - 1
-      ? setOpenModal(openModal === currentDefect ? nextDefect : currentDefect)
-      : setOpenModal(currentDefect)
+    if (currentIndex !== defectKeys.length - 1) {
+      setOpenModal(openModal === currentDefect ? nextDefect : currentDefect)
+    } else {
+      setOpenModal(currentDefect)
+    }
   }
+  
   const onSubmit = () => {
     const ids = Object.values(watch('defectChoices')).reduce((acc, cur) => acc.concat(cur), [])
     finalPrice(slug, ids).then((response) => {

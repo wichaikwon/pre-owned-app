@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     } else {
       router.push(path)
     }
-  }, [token, router])
+  }, [token, router, path])
 
   if (!token) {
     return <p>Loading...</p>

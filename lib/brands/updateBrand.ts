@@ -24,6 +24,7 @@ export const updateBrand = async (id: string, brandName: string) => {
       
       return response.data
     } catch (error) {
+      console.error('Error in updateBrand:', error)
       toast.error('Failed to update Brand', {
         position: 'bottom-right',
         autoClose: 2000,

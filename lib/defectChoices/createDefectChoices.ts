@@ -33,8 +33,10 @@ export const createDefectChoices = async (defectId: string, choiceCode: string, 
       }
       return { success: false, error: response.data.error }
     }
-  } catch (error: any) {
-    const errorMessage = error.response?.data?.error || error.message || 'An unexpected error occurred.'
+  } catch (error: unknown) {
+    const errorMessage = axios.isAxiosError(error)
+      ? error.response?.data?.error || error.message || 'An unexpected error occurred.'
+      : 'An unexpected error occurred.'
     toast.error(errorMessage, {
       position: 'bottom-right',
       autoClose: 2000,

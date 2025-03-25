@@ -1,6 +1,6 @@
 'use client'
 import { useSidebar } from '@/contexts/useSidebar'
-import { Link, PhoneCallIcon, X } from 'lucide-react'
+import { PhoneCallIcon, X } from 'lucide-react'
 import React from 'react'
 
 const Sidebar: React.FC = () => {

@@ -20,7 +20,8 @@ export const deleteDefectChoices = async (id: string) => {
         return response.data
       }
     })
-  } catch (error) {
+  } catch (error : unknown) {
+    console.error('Error in deleteDefectChoices:', error)
     Swal.fire({
       icon: 'error',
       title: 'Oops...',

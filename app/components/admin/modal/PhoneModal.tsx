@@ -2,9 +2,7 @@
 import { fetchBrands } from '@/lib/brands/getBrand'
 import { fetchModelsByBrandId } from '@/lib/models/getModel'
 import { fetchStorageByModelId } from '@/lib/phones/getPhone'
-import { Brand, Model, Storage } from '@/types/phones'
 import React, { useMemo, useState } from 'react'
-import { set } from 'react-hook-form'
 
 interface PhoneProps {
   isOpen: boolean

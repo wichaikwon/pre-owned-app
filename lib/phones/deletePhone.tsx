@@ -22,6 +22,7 @@ export const deletePhone = async (id: string) => {
       }
     })
   } catch (error) {
+    console.log('Error in deletePhone:', error)
     Swal.fire({
       icon: 'error',
       title: 'Oops...',

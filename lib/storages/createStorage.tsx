@@ -33,6 +33,7 @@ export const createStorage = async (storageCode: string, storageValue: string) =
         return { success: false, error: response.data.error }
         }
     } catch (error) {
+        console.log('Error in createStorage:', error)
         toast.error('Failed to create Storage', {
         position: 'bottom-right',
         autoClose: 2000,

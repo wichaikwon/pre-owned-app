@@ -21,19 +21,24 @@ export const loginAction = async (username: string, password: string) => {
       theme: 'colored',
       transition: Bounce,
     })
-  } catch (error: any) {
+  } catch (error) {
     Swal.fire({
       icon: 'error',
       title: 'Login Failed',
-      text: error.response?.data?.error || 'Invalid username or password',
+      text: axios.isAxiosError(error) && error.response?.data?.error
+        ? error.response.data.error
+        : 'Invalid username or password',
     })
   }
 }
 export const logoutAction = async () => {
   try {
     await axios.post(`${pathLoginAPI}/auth/logout`)
-  } catch (error: any) {
-    toast.error(`Can't Logout`, {
+  } catch (error: unknown) {
+    const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
+      ? error.response.data.error
+      : `Can't Logout`;
+    toast.error(errorMessage, {
       position: 'bottom-right',
       autoClose: 5000,
       hideProgressBar: false,

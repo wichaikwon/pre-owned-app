@@ -6,7 +6,7 @@ import { updatePhone } from '@/lib/phones/updatePhone'
 import { fetchStorage } from '@/lib/storages/getStorage'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type Phone = {
   id: string

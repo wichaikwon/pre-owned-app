@@ -75,6 +75,7 @@ const EditDashboard: React.FC = () => {
   const onSubmit = (data: Record<string, number>) => {
     Object.entries(data).forEach(([key, value]) => {
       const [_, id] = key.split('+')
+      console.log(_)
       updatePriceDeductions([{ id, deduction: value }])
     })
     setTimeout(() => {

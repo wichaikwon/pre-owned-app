@@ -7,7 +7,6 @@ import { fetchStorages } from '@/lib/storages/getStorage'
 import { PenSquare } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import Table from '@/app/components/admin/table/Table'
 
 type Phone = {

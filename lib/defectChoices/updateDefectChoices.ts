@@ -22,9 +22,10 @@ export const updateDefectChoices = async (id: string, defectId: string, choiceCo
       transition: Bounce,
     })
     return { success: true, data: response.data.data }
-  } catch (error: any) {
-    const errorMessage = error.response?.data?.error || error.message || 'An unexpected error occurred.'
-    console.log('Toast error triggered for unexpected error') // Debugging
+  } catch (error: unknown) {
+    const errorMessage = axios.isAxiosError(error)
+      ? error.response?.data?.error || error.message || 'An unexpected error occurred.'
+      : 'An unexpected error occurred.'
     toast.error(errorMessage, {
       position: 'bottom-right',
       autoClose: 2000,

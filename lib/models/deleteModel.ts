@@ -22,6 +22,7 @@ export const deleteModel = async (id: string) => {
       }
     })
   } catch (error) {
+    console.log('Error in deleteModel:', error)
     Swal.fire({
       icon: 'error',
       title: 'Oops...',

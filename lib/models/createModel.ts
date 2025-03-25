@@ -30,7 +30,8 @@ export const createModel = async (brandId: string, modelCode: string, modelName:
       })
       return { success: false, error: response.data.error }
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.log('Error in createModel:', error)
     toast.error('An unexpected error occurred.', {
       position: 'bottom-right',
       autoClose: 2000,

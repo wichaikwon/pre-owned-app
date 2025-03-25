@@ -23,6 +23,7 @@ export const deleteBrand = async (id: string) => {
         }
       })
     } catch (error) {
+      console.error('Error in deleteBrand:', error)
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

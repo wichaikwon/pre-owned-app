@@ -19,6 +19,7 @@ export const updatePhone = async (id: string, phoneName: string) => {
 
     return response.data
   } catch (error) {
+    console.log('Error in updatePhone:', error)
     toast.error('Failed to update Phone', {
       position: 'bottom-right',
       autoClose: 2000,

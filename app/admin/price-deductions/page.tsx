@@ -2,7 +2,7 @@
 import Table from '@/app/components/admin/table/Table'
 import Pagination from '@/hooks/pagination'
 import React, { useEffect, useState } from 'react'
-import { Ban, CircleCheckBig, PenSquare } from 'lucide-react'
+import { Ban, CircleCheckBig } from 'lucide-react'
 import { fetchDefectChoices } from '@/lib/defectChoices/getDefectChoices'
 import { fetchPriceDeductions } from '@/lib/priceDeductions/getPriceDeduction'
 import { fetchConfigBrands } from '@/lib/configBrands/getConfigBrands'
@@ -42,6 +42,7 @@ const PriceDeduction: React.FC = () => {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [_, setIsLoading] = useState(false)
+  console.log(_)
 
   const fetchData = async (page: number) => {
     setIsLoading(true)

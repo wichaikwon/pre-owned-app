@@ -2,7 +2,6 @@
 import Pagination from '@/hooks/pagination'
 import { fetchViewPhones } from '@/lib/phones/getPhone'
 import { PenSquare, Trash2 } from 'lucide-react'
-import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import PhoneModal from '@/app/components/admin/modal/PhoneModal'

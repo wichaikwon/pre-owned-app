@@ -22,6 +22,7 @@ export const deleteStorage = async (id: string) => {
           }
         })
       } catch (error) {
+        console.log('Error in deleteStorage:', error)
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
