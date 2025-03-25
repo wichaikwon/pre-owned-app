@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, FC, useContext, useState } from 'react'
+import { createContext, FC, useContext, useEffect, useState } from 'react'
 
 interface ResultContextProps {
   result: number
@@ -24,6 +24,10 @@ export const ResultProvider: FC<{ children: React.ReactNode }> = ({ children }) 
   const [result, setResult] = useState<number>(0)
   const [choiceName, setChoiceName] = useState<string[]>([])
   const [phoneData, setPhoneData] = useState<string>('')
+
+  useEffect(() => {
+    setChoiceName([])
+  }, [phoneData])
   return (
     <ResultContext.Provider value={{ result, setResult, choiceName, setChoiceName, phoneData, setPhoneData }}>
       {children}

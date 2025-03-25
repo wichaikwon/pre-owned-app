@@ -103,7 +103,7 @@ const SelectPhoneSection: React.FC = () => {
                       required
                       onChange={(e) => setSearchBrand(e.target.value)}
                     />
-                    <div className="flex h-96 w-full flex-col items-start gap-2 overflow-y-auto rounded-md bg-white shadow-lg">
+                    <div className={`flex w-full flex-col items-start gap-2 overflow-y-auto rounded-md bg-white shadow-lg ${brands.length <= 10 ? 'h-fit' : 'h-96'}`}>
                       {brands.map((brand, idx) => (
                         <button
                           key={idx}

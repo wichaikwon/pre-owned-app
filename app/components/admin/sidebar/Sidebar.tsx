@@ -4,6 +4,8 @@ import React from 'react'
 import { useSidebar } from '@/contexts/useSidebar'
 import { useLogin } from '@/contexts/useLogin'
 import {
+  Cog,
+  Cpu,
   Cylinder,
   GripVertical,
   LayoutDashboard,
@@ -22,16 +24,16 @@ const Sidebar: React.FC = () => {
   const { isOpen } = useSidebar()
   const { logoutUser } = useLogin()
   return (
-    <div className={`flex min-h-screen flex-col justify-between bg-slate-200 p-2 text-xl`}>
+    <div className={`hidden min-h-screen flex-col justify-between bg-slate-200 p-2 text-xl md:flex`}>
       <div>
         <div
           onClick={() => router.push('/admin')}
           className={cx(
-            'flex items-center gap-2 p-4',
+            'flex items-center gap-2 p-4 cursor-pointer',
             pathname ? 'font-bold text-red-700' : 'text-black hover:text-red-600'
           )}>
-          <Stethoscope  size={28}/>
-          {isOpen && <span className="cursor-pointer">LOGO</span>}
+          <Stethoscope size={28} />
+          {isOpen && <span>LOGO</span>}
         </div>
         {[
           { label: 'Dashboard', icon: <LayoutDashboard size={28} />, path: '/admin' },
@@ -41,8 +43,8 @@ const Sidebar: React.FC = () => {
           { label: 'phones', icon: <TabletSmartphone size={28} />, path: '/admin/phones' },
           { label: 'Defects', icon: <ShieldAlert size={28} />, path: '/admin/defects' },
           { label: 'Choices', icon: <GripVertical size={28} />, path: '/admin/defect-choices' },
-          { label: 'Config', icon: <GripVertical size={28} />, path: '/admin/config-brands' },
-          { label: 'Deduction', icon: <GripVertical size={28} />, path: '/admin/price-deductions' },
+          { label: 'Config', icon: <Cog size={28} />, path: '/admin/config-brands' },
+          { label: 'Deduction', icon: <Cpu size={28} />, path: '/admin/price-deductions' },
         ].map(({ label, icon, path }) => (
           <button
             key={path}
@@ -56,13 +58,9 @@ const Sidebar: React.FC = () => {
           </button>
         ))}
       </div>
-      <div className="hover flex items-center gap-2 p-4 hover:text-red-600">
-        <LogOut  size={28}/>
-        {isOpen && (
-          <button className="cursor-pointer" onClick={logoutUser}>
-            Logout
-          </button>
-        )}
+      <div className="hover flex items-center gap-2 p-4 cursor-pointer hover:text-red-600" onClick={logoutUser}>
+        <LogOut size={28} />
+        {isOpen && <span>Logout</span>}
       </div>
     </div>
   )

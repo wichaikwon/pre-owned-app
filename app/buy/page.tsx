@@ -2,9 +2,7 @@
 import { useResult } from '@/contexts/useResult'
 import Image from 'next/image'
 import React, { Fragment } from 'react'
-import SellGoodsSection from '../components/client/section/SellGoodsSection'
-import FaqSection from '../components/client/section/FaqSection'
-import FooterSection from '../components/client/section/FooterSection'
+
 
 const Buy: React.FC = () => {
   const { result, choiceName, phoneData } = useResult()

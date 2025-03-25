@@ -88,43 +88,48 @@ const EditDashboard: React.FC = () => {
       })
     }, 1000)
   }
-
   return (
     <div className="flex w-full flex-col gap-2 px-4 md:px-8">
       <div className="flex items-center justify-between">
         <button className="rounded-md bg-slate-200 p-2" onClick={() => router.push('/admin')}>
           Back
         </button>
-        <button type="submit" className="mt-4 rounded-md bg-blue-500 p-2 text-white">
-          Save
-        </button>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <button type="submit" className="mt-4 rounded-md bg-blue-500 p-2 text-white">
+            Save
+          </button>
+        </form>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {Object.entries(groupedDefects).map(([defectName, deductions]) => (
-          <div key={defectName} className="flex flex-col">
-            <h2 className="text-lg">{defectName}</h2>
-            <div className="grid grid-cols-5 gap-4 rounded-md bg-slate-200 p-2">
-              {deductions.map((deduction) => (
-                <div key={deduction.id}>
-                  <p>{deduction.choiceName}</p>
-                  <input
+      <div className="max-h-[80vh] overflow-y-auto">
+        {Object.entries(groupedDefects)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([defectName, deductions]) => (
+            <div key={defectName} className="flex flex-col">
+              <h2 className="text-lg">{defectName}</h2>
+              <div className="grid grid-cols-6 gap-4 rounded-md bg-slate-200 p-2">
+                {deductions
+                  .sort((a, b) => a.choiceName.localeCompare(b.choiceName))
+                  .map((deduction) => (
+                  <div key={deduction.id}>
+                    <p>{deduction.choiceName}</p>
+                    <input
                     className="rounded-md border bg-white p-2"
                     type="number"
                     {...register(`${deduction.defectName}+${deduction.id}`, {
                       valueAsNumber: true,
                       onChange: (e) => {
-                        const value = e.target.value
-                        const numericValue = value === '' ? 0 : Math.max(0, Number(value))
-                        setValue(`${deduction.defectName}+${deduction.id}`, numericValue)
+                      const value = e.target.value
+                      const numericValue = value === '' ? 0 : Math.max(0, Number(value))
+                      setValue(`${deduction.defectName}+${deduction.id}`, numericValue)
                       },
                     })}
-                  />
-                </div>
-              ))}
+                    />
+                  </div>
+                  ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </form>
+          ))}
+      </div>
     </div>
   )
 }

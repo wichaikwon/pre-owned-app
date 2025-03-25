@@ -1,4 +1,3 @@
-
 import { fetchBrands } from '@/lib/brands/getBrand'
 import React, { useState } from 'react'
 
@@ -53,7 +52,7 @@ const ModelModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
         brandName: '',
         isDeleted: false,
       })
-      onClose() 
+      onClose()
     }
   }
   return (
@@ -61,7 +60,7 @@ const ModelModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
       onClick={() => onClose()}
       className="fixed top-0 left-0 flex h-full w-full items-center justify-center bg-black/50">
       <div className="flex w-3/12 flex-col gap-4 rounded-md bg-white p-4" onClick={(e) => e.stopPropagation()}>
-        <p className="flex justify-center text-2xl">Create Brand</p>
+        <p className="flex justify-center text-2xl">Create Model</p>
         <form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e)}>
           <div className="flex flex-col gap-2">
             <label>Brand Name</label>
@@ -77,7 +76,8 @@ const ModelModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
                 </p>
               </button>
               {isOpenBrand && (
-                <div className="absolute mt-0.5 h-80 w-full overflow-y-auto rounded-md border bg-white p-2">
+                <div
+                  className={`absolute mt-0.5 ${brands.length <= 15 ? 'h-fit' : 'h-[312px]'} w-full overflow-y-auto rounded-md border bg-white p-2`}>
                   <input
                     className="mb-1 w-full rounded-md border p-2"
                     value={searchBrand}
@@ -85,7 +85,7 @@ const ModelModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
                     onChange={(e) => setSearchBrand(e.target.value)}
                     autoFocus
                   />
-                  {filterBrands.length > 1 &&
+                  {filterBrands.length > 0 &&
                     filterBrands.map(
                       (brand, idx) =>
                         !brand.isDeleted && (
@@ -110,7 +110,7 @@ const ModelModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <label>Brand Code</label>
+            <label>Model Code</label>
             <input
               className={`rounded-md border p-2 ${error ? 'border-red-500' : ''}`}
               onChange={(e) => setModelCode(e.target.value)}

@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { pathAPI } from '../api'
 
-export const fetchPriceDeductions = async () => {
+export const fetchPriceDeductions = async (page:number) => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/price-deductions`)
+    const response = await axios.get(`${pathAPI}/phones/price-deductions?page=${page}`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch Price Deductions', error)

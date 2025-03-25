@@ -9,7 +9,7 @@ const FaqSection: React.FC = () => {
   const toggleModal = (id: number) => {
     const index = openModal.findIndex((item) => item.id === id)
     if (index === -1) {
-      setOpenModal([...openModal, { id, open: !openModal }])
+      setOpenModal([...openModal, { id, open: true }])
     } else {
       const copy = [...openModal]
       copy[index].open = !copy[index].open

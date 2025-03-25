@@ -56,7 +56,7 @@ export const fetchViewPhone = async (brandId: string, modelId: string, storageId
 }
 export const fetchViewPhoneWithDeductionsByPhoneId = async (id: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/view-phone-wih-deductions?phone_id=${id}`)
+    const response = await axios.get(`${pathAPI}/phones/view-phone-with-deductions?phone_id=${id}`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch View Phone By Id', error)

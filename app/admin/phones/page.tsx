@@ -1,14 +1,14 @@
 'use client'
 import Pagination from '@/hooks/pagination'
-import { fetchPhones, fetchViewPhones } from '@/lib/phones/getPhone'
+import { fetchViewPhones } from '@/lib/phones/getPhone'
 import { PenSquare, Trash2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo, useState } from 'react'
-import { set, useForm } from 'react-hook-form'
-import Table from '@/app/components/admin/table/Table'
+import { useForm } from 'react-hook-form'
 import PhoneModal from '@/app/components/admin/modal/PhoneModal'
 import { createPhone } from '@/lib/phones/createPhone'
 import { deletePhone } from '@/lib/phones/deletePhone'
+import Table from '@/app/components/admin/table/Table'
 
 type Phone = {
   phoneId: string
@@ -28,9 +28,7 @@ type Phone = {
 }
 
 const Phones: React.FC = () => {
-  const pathname = usePathname()
   const { handleSubmit } = useForm()
-  const router = useRouter()
   const [phones, setPhones] = useState<Phone[]>([])
   const [search, setSearch] = useState('')
   const [isModal, setIsModal] = useState(false)
@@ -62,6 +60,7 @@ const Phones: React.FC = () => {
   useEffect(() => {
     fetchViewPhones().then(setPhones)
   }, [])
+
   const handleCreate = async (
     brandId: string,
     modelId: string,
@@ -74,6 +73,7 @@ const Phones: React.FC = () => {
     createPhone(brandId, modelId, storageId, phoneCode, phoneName, price, minPrice)
     return { success: true }
   }
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page)
   }
@@ -83,64 +83,65 @@ const Phones: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col px-4 md:px-8">
-      <Table
-        title="Phones"
-        headers={[
-          'Brand Code',
-          'Brand Name',
-          'Model Code',
-          'Model Name',
-          'Storage Code',
-          'Storage Value',
-          'Phone Code',
-          'Phone Name',
-          'Price',
-          'Min Price',
-          'Actions',
-        ]}
-        data={currentPhones}
-        search={search}
-        onSearchChange={setSearch}
-        onCreate={() => setIsModal(true)}
-        renderRow={(phone: Phone) => (
-          <>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.storageValue}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.storageCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.phoneCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.phoneName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.price}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.minPrice}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={() => router.push(`${pathname}/edit/${phone.phoneId}`)}
-                  className="flex items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
-                  <PenSquare size={16} />
-                </button>
-                <form onSubmit={handleSubmit(() => handleDelete(phone.phoneId))}>
-                  <button
-                    type="submit"
-                    className="flex shrink-0 items-center justify-center rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600">
-                    <Trash2 size={16} />
+    <div className="hidden px-4 md:block md:px-8">
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between py-4">
+          <span className="flex-1 text-2xl">Phones</span>
+          <input
+            className="flex flex-1 rounded-md border p-2"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <div className="flex flex-1 justify-end">
+            <button
+              onClick={() => setIsModal(true)}
+              className="rounded-md bg-green-500 p-2 text-white hover:bg-green-600">
+              Create
+            </button>
+          </div>
+        </div>
+        <Table
+          headers={['Brand', 'Model', 'Storage', 'Phone', 'Price', 'Min Price', 'Actions']}
+          data={currentPhones}
+          renderRow={(phone: Phone) => (
+            <>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {phone.brandCode} - {phone.brandName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {phone.modelCode} - {phone.modelName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {phone.storageCode} - {phone.storageValue}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {phone.phoneCode} - {phone.phoneName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.price.toLocaleString()}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.minPrice.toLocaleString()}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                <div className="flex items-center justify-center gap-2 text-white">
+                  <button className="rounded-md bg-yellow-400 p-2 hover:bg-yellow-500">
+                    <PenSquare size={16} />
                   </button>
-                </form>
-              </div>
-            </td>
-          </>
-        )}
-      />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredPhones.length}
-        itemsPerPage={phonesPerPage}
-        onPageChange={handlePageChange}
-      />
-      <PhoneModal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreate} />
+                  <form onSubmit={handleSubmit(() => handleDelete(phone.phoneId))}>
+                    <button type="submit" className="rounded-md bg-red-400 p-2 hover:bg-red-500">
+                      <Trash2 size={16} />
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </>
+          )}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredPhones.length}
+          itemsPerPage={phonesPerPage}
+          onPageChange={handlePageChange}
+        />
+        <PhoneModal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreate} />
+      </div>
     </div>
   )
 }

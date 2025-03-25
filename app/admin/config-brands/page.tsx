@@ -56,48 +56,54 @@ const ConfigBrands: React.FC = () => {
     })
   }
   return (
-    <div className="flex flex-col px-4 md:px-8">
-      <Table
-        title="Config Brands"
-        headers={['Brand ', 'Defect', 'Status', 'Actions']}
-        data={currentConfigBrands}
-        search={search}
-        onSearchChange={setSearch}
-        renderRow={(configBrand: ConfigBrand) => (
-          <>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              {configBrand.brandCode} - {configBrand.brandName}
-            </td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              {configBrand.defectCode} - {configBrand.defectName}
-            </td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              <div className="flex items-center justify-center">
-                {configBrand.isDeleted ? (
-                  <Ban className="text-red-500 rotate-90" />
-                ) : (
-                  <CircleCheckBig className="text-green-500" />
-                )}
-              </div>
-            </td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              <div className="flex items-center justify-center gap-2">
+    <div className="hidden px-4 md:block md:px-8">
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between py-4">
+          <span className="flex-1 text-2xl">Phones</span>
+          <input
+            className="flex flex-1 rounded-md border p-2"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <div className="flex-1" />
+        </div>
+        <Table
+          headers={['Brand ', 'Defect', 'Status', 'Actions']}
+          data={currentConfigBrands}
+          renderRow={(configBrand: ConfigBrand) => (
+            <>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {configBrand.brandCode} - {configBrand.brandName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                {configBrand.defectCode} - {configBrand.defectName}
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                <div className="flex items-center justify-center gap-2 text-white">
+                  {configBrand.isDeleted ? (
+                    <Ban className="rotate-90 text-red-500" />
+                  ) : (
+                    <CircleCheckBig className="text-green-500" />
+                  )}
+                </div>
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center text-white">
                 <button
                   onClick={() => updateStatus(configBrand.id)}
-                  className="flex shrink-0 items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
+                  className="rounded-md bg-yellow-400 p-2 hover:bg-yellow-500">
                   <PenSquare size={16} />
                 </button>
-              </div>
-            </td>
-          </>
-        )}
-      />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredConfigBrands.length}
-        itemsPerPage={brandsPerPage}
-        onPageChange={handlePageChange}
-      />
+              </td>
+            </>
+          )}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredConfigBrands.length}
+          itemsPerPage={brandsPerPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   )
 }

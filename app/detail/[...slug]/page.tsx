@@ -1,10 +1,8 @@
 'use client'
 
-import FaqSection from '@/app/components/client/section/FaqSection'
-import FooterSection from '@/app/components/client/section/FooterSection'
-import SellGoodsSection from '@/app/components/client/section/SellGoodsSection'
 import { useResult } from '@/contexts/useResult'
 import { fetchViewPhoneWithDeductionsByPhoneId, finalPrice } from '@/lib/phones/getPhone'
+import { ChevronDown, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
 import { set, useForm } from 'react-hook-form'
@@ -19,10 +17,11 @@ type Phone = {
   phoneId: string
   phoneName: string
   defectId: string
-  index: number
+  defectIndex: number
   defectName: string
   configId: string
   choiceId: string
+  choiceIndex: number
   choiceName: string
   price: number
   minPrice: number
@@ -97,7 +96,7 @@ const Detail: React.FC = () => {
   }
   return (
     <Fragment>
-      <div className="container mx-auto flex justify-between px-4 md:px-20 md:my-10">
+      <div className="container mx-auto flex justify-between px-4 md:my-10 md:px-20">
         <div className="flex flex-1 gap-10 rounded-md">
           <div className="flex w-96 flex-col gap-4 text-xs">
             <div className="flex flex-col gap-2 rounded-md bg-gradient-to-tl from-yellow-200 to-yellow-100 p-4">
@@ -124,14 +123,30 @@ const Detail: React.FC = () => {
             <div className="flex flex-1 flex-col gap-2 rounded-md px-4 py-2">
               {Object.entries(groupedDefects).map(([defectName, defects]) => (
                 <div key={defectName} className="flex flex-1 flex-col items-start rounded-md bg-slate-200 p-2">
-                  <button
-                    className="flex w-full items-center p-1"
-                    onClick={() => {
-                      handleOpenModal(defectName)
-                      setOpenModal(defectName)
-                    }}>
-                    {defectName}
-                  </button>
+                  <div className="flex w-full items-center justify-between">
+                    <button
+                      className="flex flex-1 items-center p-1"
+                      onClick={() => {
+                        handleOpenModal(defectName)
+                        setOpenModal(defectName)
+                      }}>
+                      {defectName}
+                    </button>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-yellow-500">
+                        {Object.keys(groupedDefects).pop() === defectName
+                          ? `มี ${
+                              (watch('defectChoices')[defectName] || []).filter((id: string) =>
+                                defects.some((defect) => defect.choiceId === id)
+                              ).length
+                            } ข้อ`
+                          : (watch('defectChoices')[defectName] || [])
+                              .filter((id) => defects.some((defect) => defect.choiceId === id))
+                              .map((id) => defects.find((defect) => defect.choiceId === id)?.choiceName)}
+                      </span>
+                      {openModal !== defectName ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+                    </div>
+                  </div>
                   <div className="grid w-full flex-1 grid-cols-3 gap-2">
                     {openModal === defectName &&
                       defects.map((defect) => {

@@ -89,54 +89,62 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col px-4 md:px-8">
-      <Table
-        title="Dashboard"
-        headers={[
-          'Actions',
-          'Price',
-          'Min Price',
-          'Phone Code',
-          'Phone Name',
-          'Brand Code',
-          'Brand Name',
-          'Model Code',
-          'Model Name',
-          'Storage Code',
-          'Storage Value',
-        ]}
-        data={currentPhones}
-        search={search}
-        onSearchChange={setSearch}
-        renderRow={(phone: Phone) => (
-          <>
-            <td className="border border-gray-300 px-4 py-2">
-              <button
-                onClick={() =>
-                  router.push(`${pathname}/edit/${phone.brandId}/${phone.modelId}/${phone.storageId}/${phone.id}`)
-                }
-                className="flex w-full items-center justify-center rounded-md bg-yellow-500 py-2 text-white hover:bg-yellow-600">
-                <PenSquare size={16} />
-              </button>
-            </td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.price}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.minPrice}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.phoneCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.phoneName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.storageCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.storageValue}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelName}</td>
-          </>
-        )}
-      />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredPhones.length}
-        itemsPerPage={phonesPerPage}
-        onPageChange={handlePageChange}
-      />
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between py-4">
+          <span className="text-2xl flex-1">Phones</span>
+          <input
+            className="flex rounded-md flex-1 border p-2"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <div className='flex-1' />
+        </div>
+        <Table
+          headers={[
+            'Actions',
+            'Storage Value',
+            'Phone Name',
+            'Price',
+            'Min Price',
+            'Storage Code',
+            'Phone Code',
+            'Brand Code',
+            'Brand Name',
+            'Model Code',
+            'Model Name',
+          ]}
+          data={currentPhones}
+          renderRow={(phone: Phone) => (
+            <>
+              <td className="border border-gray-300 px-4 py-2">
+                <button
+                  onClick={() =>
+                    router.push(`${pathname}/edit/${phone.brandId}/${phone.modelId}/${phone.storageId}/${phone.id}`)
+                  }
+                  className="flex w-full items-center justify-center rounded-md bg-yellow-500 py-2 text-white hover:bg-yellow-600">
+                  <PenSquare size={16} />
+                </button>
+              </td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.storageValue}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.phoneName}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.price.toLocaleString()}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.minPrice.toLocaleString()}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.storageCode}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.phoneCode}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandCode}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.brandName}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelCode}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{phone.modelName}</td>
+            </>
+          )}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredPhones.length}
+          itemsPerPage={phonesPerPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   )
 }

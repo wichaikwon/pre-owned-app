@@ -51,14 +51,13 @@ const Brands: React.FC = () => {
     const result = await createBrand(brandCode, brandName)
     if (result.success) {
       console.log('Brand created:', result.data)
-      fetchBrands().then(setBrands) 
+      fetchBrands().then(setBrands)
     } else {
       console.error('Error:', result.error)
     }
-  
+
     return result
   }
-  
 
   const handleDelete = (id: string) => {
     deleteBrand(id).then(() => fetchBrands().then(setBrands))
@@ -66,44 +65,55 @@ const Brands: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col px-4 md:px-8">
-      <Table
-        title="Brands"
-        headers={['Brand Code', 'Brand Name', 'Actions']}
-        data={currentBrands}
-        search={search}
-        onSearchChange={setSearch}
-        onCreate={() => setIsModal(true)}
-        renderRow={(brand: Brand) => (
-          <>
-            <td className="border border-gray-300 px-4 py-2 text-center">{brand.brandCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{brand.brandName}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={() => router.push(`${pathname}/edit/${brand.id}`)}
-                  className="flex items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
-                  <PenSquare size={16} />
-                </button>
-                <form onSubmit={handleSubmit(() => handleDelete(brand.id))}>
+    <div className="hidden px-4 md:block md:px-8">
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between py-4">
+          <span className="flex-1 text-2xl">Phones</span>
+          <input
+            className="flex flex-1 rounded-md border p-2"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <div className='flex flex-1 justify-end'>
+            <button
+              onClick={() => setIsModal(true)}
+              className="rounded-md bg-green-500 p-2 text-white hover:bg-green-600">
+              Create
+            </button>
+          </div>
+        </div>
+        <Table
+          headers={['Brand Code', 'Brand Name', 'Actions']}
+          data={currentBrands}
+          renderRow={(brand: Brand) => (
+            <>
+              <td className="border border-gray-300 px-4 py-2 text-center">{brand.brandCode}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{brand.brandName}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                <div className="flex items-center justify-center gap-2 text-white">
                   <button
-                    type="submit"
-                    className="flex shrink-0 items-center justify-center rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600">
-                    <Trash2 size={16} />
+                    onClick={() => router.push(`${pathname}/edit/${brand.id}`)}
+                    className="rounded-md bg-yellow-400 p-2 hover:bg-yellow-500">
+                    <PenSquare size={16} />
                   </button>
-                </form>
-              </div>
-            </td>
-          </>
-        )}
-      />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredBrands.length}
-        itemsPerPage={brandsPerPage}
-        onPageChange={handlePageChange}
-      />
-      <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateBrand} />
+                  <form onSubmit={handleSubmit(() => handleDelete(brand.id))}>
+                    <button type="submit" className="rounded-md bg-red-400 p-2 hover:bg-red-500">
+                      <Trash2 size={16} />
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </>
+          )}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredBrands.length}
+          itemsPerPage={brandsPerPage}
+          onPageChange={handlePageChange}
+        />
+        <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateBrand} />
+      </div>
     </div>
   )
 }

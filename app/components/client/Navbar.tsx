@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
             <button
               key={idx}
               className="flex border-b-2 border-b-transparent p-4 hover:border-b-2 hover:border-b-yellow-400">
-              <Link href={'/admin/login'}>
+              <Link href={'#'}>
                 <p>{item}</p>
               </Link>
             </button>
@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
             </Link>
           </button>
           <button className="hidden transform transition duration-300 ease-in-out hover:text-gray-500 md:flex">
-            <Link href={'/'}>สมัครสมาชิก/เข้าสู่ระบบ</Link>
+            <Link href={'/admin/login'}>สมัครสมาชิก/เข้าสู่ระบบ</Link>
           </button>
         </div>
       </div>

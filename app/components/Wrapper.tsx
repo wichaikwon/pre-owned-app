@@ -23,12 +23,12 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
       <ProtectedRoute>
         <div className="flex h-screen">
-          <div className={`flex min-h-screen flex-col bg-slate-200 p-2${isOpen ? 'w-64' : 'w-fit'} `}>
+          <div className={`flex flex-col bg-slate-200 p-2${isOpen ? 'w-52' : 'w-fit'} `}>
             <Sidebar />
           </div>
           <div className="flex flex-1 flex-col">
             <NavbarAdmin />
-            <div className="min-h-0 flex-1 overflow-auto">{children}</div>
+            <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
             <FooterAdmin />
           </div>
         </div>

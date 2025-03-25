@@ -66,44 +66,55 @@ const Storages: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col px-4 md:px-8">
-      <Table
-        title="Storages"
-        headers={['Storage Code', 'Storage Name', 'Actions']}
-        data={currentStorages}
-        search={search}
-        onSearchChange={setSearch}
-        onCreate={() => setIsModal(true)}
-        renderRow={(storage: Storages) => (
-          <>
-            <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageCode}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageValue}</td>
-            <td className="border border-gray-300 px-4 py-2 text-center">
-              <div className="flex items-center justify-center gap-2">
-                <button
-                  onClick={() => router.push(`${pathname}/edit/${storage.id}`)}
-                  className="flex items-center justify-center rounded-md bg-yellow-500 px-3 py-2 text-white hover:bg-yellow-600">
-                  <PenSquare size={16} />
-                </button>
-                <form onSubmit={handleSubmit(() => handleDelete(storage.id))}>
+    <div className="hidden px-4 md:block md:px-8">
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between py-4">
+          <span className="flex-1 text-2xl">Storage</span>
+          <input
+            className="flex flex-1 rounded-md border p-2"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <div className="flex flex-1 justify-end">
+            <button
+              onClick={() => setIsModal(true)}
+              className="rounded-md bg-green-500 p-2 text-white hover:bg-green-600">
+              Create
+            </button>
+          </div>
+        </div>
+        <Table
+          headers={['Storage Code', 'Storage Name', 'Actions']}
+          data={currentStorages}
+          renderRow={(storage: Storages) => (
+            <>
+              <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageCode}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">{storage.storageValue}</td>
+              <td className="border border-gray-300 px-4 py-2 text-center">
+                <div className="flex items-center justify-center gap-2 text-white">
                   <button
-                    type="submit"
-                    className="flex shrink-0 items-center justify-center rounded-md bg-red-500 px-3 py-2 text-white hover:bg-red-600">
-                    <Trash2 size={16} />
+                    onClick={() => router.push(`${pathname}/edit/${storage.id}`)}
+                    className="rounded-md bg-yellow-400 p-2 hover:bg-yellow-500">
+                    <PenSquare size={16} />
                   </button>
-                </form>
-              </div>
-            </td>
-          </>
-        )}
-      />
-      <Pagination
-        currentPage={currentPage}
-        totalItems={filteredBrands.length}
-        itemsPerPage={brandsPerPage}
-        onPageChange={handlePageChange}
-      />
-      <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateStorage} />
+                  <form onSubmit={handleSubmit(() => handleDelete(storage.id))}>
+                    <button type="submit" className="rounded-md bg-red-400 p-2 hover:bg-red-500">
+                      <Trash2 size={16} />
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </>
+          )}
+        />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredBrands.length}
+          itemsPerPage={brandsPerPage}
+          onPageChange={handlePageChange}
+        />
+        <Modal isOpen={isModal} onClose={() => setIsModal(false)} onSubmit={handleCreateStorage} />
+      </div>
     </div>
   )
 }
