@@ -1,7 +1,7 @@
 'use client'
 import { fetchBrands } from '@/lib/brands/getBrand'
 import { fetchModelsByBrandId } from '@/lib/models/getModel'
-import { fetchStorageByModelId } from '@/lib/phones/getPhone'
+import { fetchStorages } from '@/lib/storages/getStorage'
 import React, { useMemo, useState } from 'react'
 
 interface PhoneProps {
@@ -91,8 +91,8 @@ const PhoneModal: React.FC<PhoneProps> = ({ isOpen, onClose, onSubmit }) => {
       setModels(data)
     })
   }
-  const handleStorage = (modelId: string) => {
-    fetchStorageByModelId(modelId).then((data) => {
+  const handleStorage = () => {
+    fetchStorages().then((data) => {
       setStorages(data)
     })
   }
@@ -246,7 +246,7 @@ const PhoneModal: React.FC<PhoneProps> = ({ isOpen, onClose, onSubmit }) => {
                             storageValue: '',
                             isDeleted: false,
                           })
-                          handleStorage(model.id)
+                          handleStorage()
                         }}>
                         <button className="flex w-full p-2 hover:bg-gray-200">
                           <p className="flex w-full">
