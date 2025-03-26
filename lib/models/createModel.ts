@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { pathModelsAPI } from '../api'
+import { pathBrandsAPI } from '../api'
 import { Bounce, toast } from 'react-toastify'
 
 export const createModel = async (brandId: string, modelCode: string, modelName: string) => {
   try {
-    const response = await axios.post(`${pathModelsAPI}/models/models/create`, [{ brandId, modelCode, modelName }], {
+    const response = await axios.post(`${pathBrandsAPI}/models/models/create`, [{ brandId, modelCode, modelName }], {
       withCredentials: true,
     })
     if (response.data.success) {

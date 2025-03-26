@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { pathAPI } from '../api'
+import { pathBrandsAPI, pathPhonesAPI } from '../api'
 
 export const fetchBrands = async () => {
   try {
-    const response = await axios.get(`${pathAPI}/brands/brands`, { withCredentials: true })
+    const response = await axios.get(`${pathBrandsAPI}/brands/brands`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Brands', error)
@@ -13,7 +13,7 @@ export const fetchBrands = async () => {
 
 export const fetchBrand = async (id: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/brands/brand?id=${id}`, { withCredentials: true })
+    const response = await axios.get(`${pathPhonesAPI}/brands/brand?id=${id}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Brand', error)
@@ -23,7 +23,7 @@ export const fetchBrand = async (id: string) => {
 
 export const fetchViewBrands = async () => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/view-brands`, { withCredentials: true })
+    const response = await axios.get(`${pathPhonesAPI}/phones/view-brands`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch View Brands', error)

@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { pathAPI, pathPhonesAPI } from '../api'
+import {  pathPhonesAPI } from '../api'
 
 export const fetchPhones = async () => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/phones`)
+    const response = await axios.get(`${pathPhonesAPI}/phones/phones`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch Phones', error)
@@ -12,7 +12,7 @@ export const fetchPhones = async () => {
 }
 export const fetchPhone = async (id: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/phone?id=${id}`)
+    const response = await axios.get(`${pathPhonesAPI}/phones/phone?id=${id}`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch Phone', error)
@@ -36,7 +36,7 @@ export const finalPrice = async (phoneId: string, defectChoiceId: string[]) => {
 }
 export const fetchStorageByModelId = async (modelId: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/storages?model_id=${modelId}`, { withCredentials: true })
+    const response = await axios.get(`${pathPhonesAPI}/phones/storages?model_id=${modelId}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Storage By Model Id', error)
@@ -46,7 +46,7 @@ export const fetchStorageByModelId = async (modelId: string) => {
 export const fetchViewPhone = async (brandId: string, modelId: string, storageId: string) => {
   try {
     const response = await axios.get(
-      `${pathAPI}/phones/view-phone?brand_id=${brandId}&model_id=${modelId}&storage_id=${storageId}`
+      `${pathPhonesAPI}/phones/view-phone?brand_id=${brandId}&model_id=${modelId}&storage_id=${storageId}`
     )
     return response.data
   } catch (error) {
@@ -56,7 +56,7 @@ export const fetchViewPhone = async (brandId: string, modelId: string, storageId
 }
 export const fetchViewPhoneWithDeductionsByPhoneId = async (id: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/view-phone-with-deductions?phone_id=${id}`)
+    const response = await axios.get(`${pathPhonesAPI}/phones/view-phone-with-deductions?phone_id=${id}`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch View Phone By Id', error)
@@ -66,7 +66,7 @@ export const fetchViewPhoneWithDeductionsByPhoneId = async (id: string) => {
 
 export const fetchViewPhones = async () => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/view-phones`)
+    const response = await axios.get(`${pathPhonesAPI}/phones/view-phones`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch View Phones', error)

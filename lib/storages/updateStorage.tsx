@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { pathStoragesAPI } from '../api'
+import { pathBrandsAPI } from '../api'
 import { Bounce, toast } from 'react-toastify'
 
 export const updateStorage = async (id: string, storageCode: string, storageValue: string) => {
   try {
     const response = await axios.put(
-      `${pathStoragesAPI}/storages/storage/update?id=${id}`,
+      `${pathBrandsAPI}/storages/storage/update?id=${id}`,
       { id, storageCode, storageValue },
       { withCredentials: true }
     )

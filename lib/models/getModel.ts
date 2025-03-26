@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { pathAPI } from '../api'
+import { pathBrandsAPI, pathPhonesAPI } from '../api'
 
 export const fetchModels = async () => {
   try {
-    const response = await axios.get(`${pathAPI}/models/models`, { withCredentials: true })
+    const response = await axios.get(`${pathBrandsAPI}/models/models`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Models', error)
@@ -13,7 +13,7 @@ export const fetchModels = async () => {
 
 export const fetchModel = async (id: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/models/model?id=${id}`, { withCredentials: true })
+    const response = await axios.get(`${pathBrandsAPI}/models/model?id=${id}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Model', error)
@@ -23,7 +23,7 @@ export const fetchModel = async (id: string) => {
 
 export const fetchModelsByBrandId = async (brandId: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/models/models/brand?brand_id=${brandId}`, { withCredentials: true })
+    const response = await axios.get(`${pathBrandsAPI}/models/models/brand?brand_id=${brandId}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Models By BrandId', error)
@@ -33,7 +33,7 @@ export const fetchModelsByBrandId = async (brandId: string) => {
 
 export const fetchViewModelsByBrandId = async (brandId: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/phones/view-models?brand_id=${brandId}`, { withCredentials: true })
+    const response = await axios.get(`${pathPhonesAPI}/phones/view-models?brand_id=${brandId}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch View Models By BrandId', error)

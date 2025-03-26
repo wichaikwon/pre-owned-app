@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { pathAPI } from '../api'
+import { pathDefectsAPI } from '../api'
 
 export const fetchDefectChoices = async () => {
   try {
-    const response = await axios.get(`${pathAPI}/defect-choices/defect-choices`)
+    const response = await axios.get(`${pathDefectsAPI}/defect-choices/defect-choices`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch Defect Choices', error)
@@ -12,7 +12,7 @@ export const fetchDefectChoices = async () => {
 }
 export const fetchDefectChoice = async (id: string) => {
   try {
-    const response = await axios.get(`${pathAPI}/defect-choices/defect-choice?id=${id}`)
+    const response = await axios.get(`${pathDefectsAPI}/defect-choices/defect-choice?id=${id}`)
     return response.data
   } catch (error) {
     console.error('Failed to fetch Defect Choice', error)

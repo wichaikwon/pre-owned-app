@@ -1,11 +1,14 @@
 'use client'
 
+import FaqSection from '@/app/components/client/section/FaqSection'
+import FooterSection from '@/app/components/client/section/FooterSection'
+import SellGoodsSection from '@/app/components/client/section/SellGoodsSection'
 import { useResult } from '@/contexts/useResult'
 import { fetchViewPhoneWithDeductionsByPhoneId, finalPrice } from '@/lib/phones/getPhone'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
-import React, { Fragment, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { Fragment, useEffect, useMemo, useState } from 'react'
+import { set, useForm } from 'react-hook-form'
 
 type Phone = {
   brandId: string
@@ -17,11 +20,10 @@ type Phone = {
   phoneId: string
   phoneName: string
   defectId: string
-  defectIndex: number
+  index: number
   defectName: string
   configId: string
   choiceId: string
-  choiceIndex: number
   choiceName: string
   price: number
   minPrice: number
@@ -45,25 +47,31 @@ const Detail: React.FC = () => {
   }, [slug])
   if (!phone) return <div>Loading...</div>
 
-  const groupedDefects = (phone || []).reduce(
-    (acc, { defectName, ...deduction }) => {
-      ;(acc[defectName] ||= []).push({ defectName, ...deduction })
-      return acc
-    },
-    {} as Record<string, Phone[]>
+  const groupedDefects = useMemo(
+    () =>
+      phone.reduce(
+        (acc, { defectName, ...deduction }) => {
+          ;(acc[defectName] ||= []).push({ defectName, ...deduction })
+          return acc
+        },
+        {} as Record<string, Phone[]>
+      ),
+    [phone]
   )
+  useEffect(() => {
+    if (Object.keys(groupedDefects).length > 0) {
+      setOpenModal(Object.keys(groupedDefects)[0])
+    }
+  }, [groupedDefects])
 
   const handleOpenModal = (currentDefect: string) => {
     const defectKeys = Object.keys(groupedDefects)
     const currentIndex = defectKeys.indexOf(currentDefect)
     const nextDefect = defectKeys[(currentIndex + 1) % defectKeys.length]
-    if (currentIndex !== defectKeys.length - 1) {
-      setOpenModal(openModal === currentDefect ? nextDefect : currentDefect)
-    } else {
-      setOpenModal(currentDefect)
-    }
+    currentIndex !== defectKeys.length - 1
+      ? setOpenModal(openModal === currentDefect ? nextDefect : currentDefect)
+      : setOpenModal(currentDefect)
   }
-  
   const onSubmit = () => {
     const ids = Object.values(watch('defectChoices')).reduce((acc, cur) => acc.concat(cur), [])
     finalPrice(slug, ids).then((response) => {
@@ -117,17 +125,15 @@ const Detail: React.FC = () => {
             <div className="flex flex-1 flex-col gap-2 rounded-md px-4 py-2">
               {Object.entries(groupedDefects).map(([defectName, defects]) => (
                 <div key={defectName} className="flex flex-1 flex-col items-start rounded-md bg-slate-200 p-2">
-                  <div className="flex w-full items-center justify-between">
-                    <button
-                      className="flex flex-1 items-center p-1"
-                      onClick={() => {
-                        handleOpenModal(defectName)
-                        setOpenModal(defectName)
-                      }}>
-                      {defectName}
-                    </button>
+                  <div
+                    className="flex w-full items-center justify-between"
+                    onClick={() => {
+                      handleOpenModal(defectName)
+                      setOpenModal(defectName)
+                    }}>
+                    <button className="flex w-full items-center p-1">{defectName}</button>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-yellow-500">
+                      <span className="text-sm text-nowrap text-yellow-500">
                         {Object.keys(groupedDefects).pop() === defectName
                           ? `มี ${
                               (watch('defectChoices')[defectName] || []).filter((id: string) =>

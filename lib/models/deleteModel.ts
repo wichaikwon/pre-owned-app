@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { pathModelsAPI } from '../api'
+import { pathBrandsAPI } from '../api'
 import Swal from 'sweetalert2'
 
 export const deleteModel = async (id: string) => {
@@ -14,7 +14,7 @@ export const deleteModel = async (id: string) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         Swal.fire('Deleted!', 'Your item has been deleted.', 'success')
-        const response = await axios.put(`${pathModelsAPI}/models/model/delete?id=${id}`, { withCredentials: true })
+        const response = await axios.put(`${pathBrandsAPI}/models/model/delete?id=${id}`, { withCredentials: true })
         setTimeout(() => {
           window.location.reload()
         }, 1000)

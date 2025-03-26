@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { pathDefectChoicesAPI } from '../api'
+import { pathDefectsAPI } from '../api'
 import Swal from 'sweetalert2'
 
 export const deleteDefectChoices = async (id: string) => {
@@ -14,7 +14,7 @@ export const deleteDefectChoices = async (id: string) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         Swal.fire('Deleted!', 'Your item has been deleted.', 'success')
-        const response = await axios.patch(`${pathDefectChoicesAPI}/defect-choices/defect-choice/delete?id=${id}`, {
+        const response = await axios.patch(`${pathDefectsAPI}/defect-choices/defect-choice/delete?id=${id}`, {
           withCredentials: true,
         })
         return response.data

@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { pathModelsAPI } from '../api'
+import { pathBrandsAPI } from '../api'
 import { Bounce, toast } from 'react-toastify'
 
 export const updateModel = async (id: string, brandId: string, modelCode: string, modelName: string) => {
   try {
     const response = await axios.put(
-      `${pathModelsAPI}/models/model/update?id=${id}&brand_id=${brandId}`,
+      `${pathBrandsAPI}/models/model/update?id=${id}&brand_id=${brandId}`,
       { id, brandId, modelName, modelCode },
       { withCredentials: true }
     )

@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { pathDefectChoicesAPI } from '../api'
+import { pathDefectsAPI } from '../api'
 import { Bounce, toast } from 'react-toastify'
 
 export const createDefectChoices = async (defectId: string, choiceCode: string, choiceName: string) => {
   try {
-    const response = await axios.post(`${pathDefectChoicesAPI}/defect-choices/defect-choice/create`, [
+    const response = await axios.post(`${pathDefectsAPI}/defect-choices/defect-choice/create`, [
       { defectId, choiceCode, choiceName },
     ])
 

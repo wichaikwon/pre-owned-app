@@ -1,11 +1,11 @@
 import { Bounce, toast } from 'react-toastify'
-import { pathDefectChoicesAPI } from '../api'
+import { pathDefectsAPI } from '../api'
 import axios from 'axios'
 
 export const updateDefectChoices = async (id: string, defectId: string, choiceCode: string, choiceName: string) => {
   try {
     const response = await axios.put(
-      `${pathDefectChoicesAPI}/defect-choices/defect-choice/update?id=${id}&defect_id=${defectId}`,
+      `${pathDefectsAPI}/defect-choices/defect-choice/update?id=${id}&defect_id=${defectId}`,
 
       {
         choiceCode,

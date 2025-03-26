@@ -15,7 +15,7 @@ const SellGoodsSection: React.FC = () => {
                   {name.details.map((item, idx) => (
                     <div key={idx} className="flex justify-center gap-4">
                       <div className="flex w-24 items-center justify-center">
-                        <Image alt={item.image} src={item.image} width={100} height={100} className="rounded-full" />
+                        <Image alt={item.image} src={item.image} width={100} height={100} style={{width:"auto",height:"auto"}} className="rounded-full" />
                       </div>
                       <div className="flex w-full flex-col justify-center">
                         <p className="text-sm font-bold">{item.header} </p>

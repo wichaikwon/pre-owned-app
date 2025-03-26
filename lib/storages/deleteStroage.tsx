@@ -1,5 +1,5 @@
 import Swal from "sweetalert2"
-import { pathStoragesAPI } from "../api"
+import { pathBrandsAPI } from "../api"
 import axios from "axios"
 
 export const deleteStorage = async (id: string) => {
@@ -14,7 +14,7 @@ export const deleteStorage = async (id: string) => {
         }).then(async (result) => {
           if (result.isConfirmed) {
             Swal.fire('Deleted!', 'Your item has been deleted.', 'success')
-            const response = await axios.put(`${pathStoragesAPI}/storages/storage/delete?id=${id}`, { withCredentials: true })
+            const response = await axios.put(`${pathBrandsAPI}/storages/storage/delete?id=${id}`, { withCredentials: true })
             setTimeout(() => {
               window.location.reload()
             }, 1000)

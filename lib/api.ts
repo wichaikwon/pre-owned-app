@@ -1,9 +1,5 @@
-export const pathAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080'
 export const pathBrandsAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8081'
-export const pathModelsAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8082'
-export const pathStoragesAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8083'
 export const pathDefectsAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8084'
-export const pathDefectChoicesAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8085'
 export const pathPhonesAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8086'
 export const pathLoginAPI = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8088'
 
