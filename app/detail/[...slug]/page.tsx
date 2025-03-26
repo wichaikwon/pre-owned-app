@@ -1,14 +1,10 @@
 'use client'
-
-import FaqSection from '@/app/components/client/section/FaqSection'
-import FooterSection from '@/app/components/client/section/FooterSection'
-import SellGoodsSection from '@/app/components/client/section/SellGoodsSection'
 import { useResult } from '@/contexts/useResult'
 import { fetchViewPhoneWithDeductionsByPhoneId, finalPrice } from '@/lib/phones/getPhone'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { Fragment, useEffect, useMemo, useState } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 type Phone = {
   brandId: string
@@ -45,32 +41,43 @@ const Detail: React.FC = () => {
   useEffect(() => {
     fetchViewPhoneWithDeductionsByPhoneId(slug).then(setPhone)
   }, [slug])
-  if (!phone) return <div>Loading...</div>
 
-  const groupedDefects = useMemo(
-    () =>
-      phone.reduce(
-        (acc, { defectName, ...deduction }) => {
-          ;(acc[defectName] ||= []).push({ defectName, ...deduction })
-          return acc
-        },
-        {} as Record<string, Phone[]>
-      ),
-    [phone]
-  )
+  const groupedDefects = useMemo(() => {
+    if (!phone) return {}
+
+    return phone.reduce(
+      (acc, { defectName, ...deduction }) => {
+        if (!acc[defectName]) {
+          acc[defectName] = []
+        }
+        acc[defectName].push({ defectName, ...deduction })
+        return acc
+      },
+      {} as Record<string, Phone[]>
+    )
+  }, [phone])
+
   useEffect(() => {
     if (Object.keys(groupedDefects).length > 0) {
       setOpenModal(Object.keys(groupedDefects)[0])
     }
   }, [groupedDefects])
 
+  if (!phone) return <div>Loading...</div>
+
   const handleOpenModal = (currentDefect: string) => {
     const defectKeys = Object.keys(groupedDefects)
     const currentIndex = defectKeys.indexOf(currentDefect)
     const nextDefect = defectKeys[(currentIndex + 1) % defectKeys.length]
-    currentIndex !== defectKeys.length - 1
-      ? setOpenModal(openModal === currentDefect ? nextDefect : currentDefect)
-      : setOpenModal(currentDefect)
+
+    const newModal =
+      currentIndex !== defectKeys.length - 1
+        ? openModal === currentDefect
+          ? nextDefect
+          : currentDefect
+        : currentDefect
+
+    setOpenModal(newModal)
   }
   const onSubmit = () => {
     const ids = Object.values(watch('defectChoices')).reduce((acc, cur) => acc.concat(cur), [])
