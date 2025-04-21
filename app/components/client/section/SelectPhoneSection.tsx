@@ -59,14 +59,14 @@ const SelectPhoneSection: React.FC = () => {
   }
   return (
     <div className="flex flex-col md:flex-row bg-gradient-to-t from-yellow-500 to-yellow-300">
-      <div className="container flex-col md:flex-row mx-auto flex justify-between px-8 md:px-20">
+      <div className="container flex-col lg:flex-row mx-auto flex justify-between px-8 md:px-20">
         <div className="flex flex-col items-center justify-end gap-2 rounded-md">
-          <div className="relative flex  flex-col">
+          <div className="relative flex flex-col">
             <Image
               src={images[currIndex]}
               alt={`Image ${currIndex}`}
-              width={100}
-              height={100}
+              width={700}
+              height={350}
               className="rounded-md"
               style={{ width: 'auto', height: 'auto' }}
             />

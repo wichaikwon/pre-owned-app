@@ -13,7 +13,7 @@ export const fetchBrands = async () => {
 
 export const fetchBrand = async (id: string) => {
   try {
-    const response = await axios.get(`${pathPhonesAPI}/brands/brand?id=${id}`, { withCredentials: true })
+    const response = await axios.get(`${pathBrandsAPI}/brands/brand?id=${id}`, { withCredentials: true })
     return response.data
   } catch (error) {
     console.error('Failed to fetch Brand', error)

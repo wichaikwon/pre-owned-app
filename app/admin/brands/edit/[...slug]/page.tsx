@@ -22,7 +22,6 @@ const EditBrand: React.FC = () => {
       .then((brand) => {
         setValue('brandCode', brand.brandCode)
         setValue('brandName', brand.brandName)
-        console.log('brand', brand)
       })
       .catch((error) => {
         console.error('Failed to fetch brand:', error)

@@ -2,9 +2,9 @@ import React from 'react'
 
 const Footer: React.FC = () => {
   return (
-    <div>
-      <p>Footer</p>
-    </div>
+    <footer>
+      <p>Footer - reserve by solodev</p>
+    </footer>
   )
 }
 

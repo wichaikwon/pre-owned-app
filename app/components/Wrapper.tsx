@@ -7,7 +7,6 @@ import FooterAdmin from './admin/Footer'
 import ProtectedRoute from './ProtectedRoute'
 import { useSidebar } from '@/contexts/useSidebar'
 import Navbar from './client/Navbar'
-import Footer from './client/Footer'
 import SellGoodsSection from './client/section/SellGoodsSection'
 import FaqSection from './client/section/FaqSection'
 import FooterSection from './client/section/FooterSection'
@@ -46,7 +45,6 @@ const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <FooterSection />
         </div>
       </div>
-      <Footer />
     </div>
   )
 }
